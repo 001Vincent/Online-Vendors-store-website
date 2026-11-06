@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ragnar Solutions – Powering Digital Success</title>
+  <meta name="description" content="Ragnar Solutions offers Gift Cards, Cryptocurrencies, Website Creation, API Automation, Apps Development, and Telegram Bots Design. Digital solutions. Real value. All in one place." />
+  <meta name="keywords" content="Ragnar Solutions, Gift Cards, Crypto, Website Creation, API Automation, Apps Development, Telegram Bots" />
+  <meta property="og:title" content="Ragnar Solutions – Powering Digital Success" />
+  <meta property="og:description" content="Digital Solutions. Real Value. All in One Place." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" id="nav-logo-link">
+        <img src="images/rs_icon.png" class="nav-rs-icon" id="nav-rs-icon" alt="RS" />
+        <span class="nav-brand">
+          <span class="nav-brand-ragnar">RAGNAR</span>
+          <span class="nav-brand-solutions">SOLUTIONS</span>
+        </span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home" class="nav-link active" id="nav-home">Home</a></li>
+        <li><a href="#services" class="nav-link" id="nav-services">Services</a></li>
+        <li><a href="#gift-cards" class="nav-link" id="nav-giftcards">Gift Cards</a></li>
+        <li><a href="#why-us" class="nav-link" id="nav-whyus">Why Us</a></li>
+        <li><a href="#contact" class="nav-link" id="nav-contact">Contact</a></li>
+        <li class="mobile-auth-li" style="border-top:1px solid rgba(255,255,255,0.07);margin-top:8px;padding-top:8px;gap:8px;">
+          <a href="login.html"    class="nav-link" style="flex:1;text-align:center;border:1px solid rgba(26,109,255,0.3);border-radius:8px;">Sign In</a>
+          <a href="register.html" class="nav-link" style="flex:1;text-align:center;background:rgba(26,109,255,0.15);border-radius:8px;color:#fff;">Register</a>
+        </li>
+      </ul>
+      <div class="nav-auth-row" id="nav-auth-row">
+        <a href="login.html"    class="nav-signin"   id="nav-signin-btn">Sign In</a>
+        <a href="register.html" class="nav-register" id="nav-register-btn">Register</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- LIVE CRYPTO TICKER -->
+  <div class="crypto-ticker" id="crypto-ticker">
+    <div class="ticker-live-label">LIVE</div>
+    <div class="ticker-track" id="ticker-track">
+      <div class="ticker-inner" id="ticker-inner">
+        <div class="ticker-item"><span class="ticker-coin">BTC</span><span class="ticker-price">Loading…</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-particles" id="hero-particles"></div>
+    <div class="hero-content">
+      <div class="hero-logo-wrap" id="hero-logo-wrap">
+        <img src="images/hero_logo.png" alt="Ragnar Solutions" class="hero-logo-img" id="hero-logo-img" />
+      </div>
+      <div class="hero-auth-row" id="hero-badge">
+        <a href="register.html" class="hero-auth-btn hero-auth-register" id="hero-register-btn">&#43; Register</a>
+        <a href="login.html"    class="hero-auth-btn hero-auth-signin"   id="hero-signin-btn">&#128274; Sign In</a>
+      </div>
+      <h1 class="hero-title" id="hero-title">
+        Digital Solutions.<br />
+        <span class="hero-title-blue">Real Value.</span>
+      </h1>
+      <p class="hero-subtitle" id="hero-subtitle">All in One Place.</p>
+      <p class="hero-desc" id="hero-desc">
+        From Gift Cards to Cryptocurrency, Website Creation to API Automation we power your digital success with speed, security, and reliability.
+      </p>
+      <div class="hero-trust-row" id="hero-trust-row">
+        <div class="trust-item" id="trust-secure">
+          <span class="trust-icon">&#9679;</span>
+          <span>Secure</span>
+        </div>
+        <div class="trust-item" id="trust-fast">
+          <span class="trust-icon">&#9679;</span>
+          <span>Fast</span>
+        </div>
+        <div class="trust-item" id="trust-reliable">
+          <span class="trust-icon">&#9679;</span>
+          <span>Reliable</span>
+        </div>
+      </div>
+      <div class="hero-cta-row" id="hero-cta-row">
+        <a href="#services" class="btn-primary" id="hero-btn-services">Explore Services</a>
+        <a href="#contact" class="btn-outline" id="hero-btn-contact">Connect With Us</a>
+      </div>
+    </div>
+    <div class="hero-visual" id="hero-visual">
+      <div class="hero-glow" id="hero-glow"></div>
+      <div class="floating-cards-wrap" id="floating-cards-wrap">
+        <img src="images/gc_apple.jpg"       class="floating-card-img fc1" id="fc-apple"       alt="Apple Gift Card" />
+        <img src="images/gc_amazon.jpg"      class="floating-card-img fc2" id="fc-amazon"      alt="Amazon Gift Card" />
+        <img src="images/gc_playstation.jpg" class="floating-card-img fc3" id="fc-playstation" alt="PlayStation Gift Card" />
+        <img src="images/gc_visa.jpg"        class="floating-card-img fc4" id="fc-visa"         alt="VISA Gift Card" />
+        <img src="images/gc_steam.jpg"       class="floating-card-img fc5" id="fc-steam"        alt="Steam Gift Card" />
+        <img src="images/gc_google.jpg"      class="floating-card-img fc6" id="fc-google"       alt="Google Play Gift Card" />
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-container">
+      <div class="section-header" id="services-header">
+        <span class="section-tag tag-on-light">What We Do</span>
+        <h2 class="section-title" class="section-title on-light" id="services-title">Our <span class="blue">Services</span></h2>
+        <p class="section-desc" class="section-desc on-light" id="services-desc">Everything you need in one place powerful, fast, and reliable solutions for your digital needs.</p>
+      </div>
+      <div class="services-grid" id="services-grid">
+
+        <div class="service-card" id="service-giftcards">
+          <div class="sc-icon-wrap">
+            <svg class="sc-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="20" width="52" height="36" rx="6" stroke="currentColor" stroke-width="3"/>
+              <line x1="6" y1="32" x2="58" y2="32" stroke="currentColor" stroke-width="3"/>
+              <path d="M32 20V8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M32 8C32 8 26 4 24 8C22 12 28 14 32 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M32 8C32 8 38 4 40 8C42 12 36 14 32 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">Buy Gift Cards</h3>
+          <p class="sc-desc">We buy gift cards at the best rates instantly. Apple, Amazon, Google, PlayStation, Vanilla, Visa, MasterCard, Steam and more.</p>
+          <div class="sc-brands">
+            <span class="brand-tag">Apple</span>
+            <span class="brand-tag">Amazon</span>
+            <span class="brand-tag">PlayStation</span>
+            <span class="brand-tag">Visa</span>
+            <span class="brand-tag">MasterCard</span>
+            <span class="brand-tag">Steam</span>
+          </div>
+          <a href="#contact" class="sc-link" id="sc-giftcards-link">Sell Now</a>
+        </div>
+
+        <div class="service-card" id="service-crypto">
+          <div class="sc-icon-wrap">
+            <svg class="sc-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="32" r="16" stroke="currentColor" stroke-width="3"/>
+              <path d="M24 22v20M20 26h6a4 4 0 010 8h-6M20 34h7a4 4 0 010 8h-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M42 20c6 0 10 5 10 12s-4 12-10 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">Buy &amp; Sell Cryptocurrencies</h3>
+          <p class="sc-desc">Fast, secure and reliable crypto transactions. Trade with confidence using our trusted platform.</p>
+          <div class="sc-brands">
+            <span class="brand-tag">Bitcoin</span>
+            <span class="brand-tag">Ethereum</span>
+            <span class="brand-tag">Solana</span>
+            <span class="brand-tag">USDT</span>
+          </div>
+          <a href="#contact" class="sc-link" id="sc-crypto-link">Trade Now</a>
+        </div>
+
+        <div class="service-card" id="service-website">
+          <div class="sc-icon-wrap">
+            <svg class="sc-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="10" width="52" height="36" rx="4" stroke="currentColor" stroke-width="3"/>
+              <circle cx="14" cy="18" r="2" fill="currentColor"/>
+              <circle cx="22" cy="18" r="2" fill="currentColor"/>
+              <circle cx="30" cy="18" r="2" fill="currentColor"/>
+              <rect x="14" y="26" width="14" height="12" rx="2" fill="currentColor" opacity="0.6"/>
+              <line x1="32" y1="28" x2="46" y2="28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="32" y1="34" x2="46" y2="34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="20" y1="50" x2="44" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              <line x1="32" y1="46" x2="32" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">Website Creation</h3>
+          <p class="sc-desc">Modern, responsive and high converting websites tailored to your brand. We build digital experiences that convert.</p>
+          <div class="sc-brands">
+            <span class="brand-tag">Responsive</span>
+            <span class="brand-tag">SEO-Optimized</span>
+            <span class="brand-tag">High Converting</span>
+          </div>
+          <a href="#contact" class="sc-link" id="sc-website-link">Get a Site</a>
+        </div>
+
+        <div class="service-card" id="service-api">
+          <div class="sc-icon-wrap">
+            <svg class="sc-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="3"/>
+              <circle cx="32" cy="32" r="10" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="10" y1="32" x2="22" y2="32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="42" y1="32" x2="54" y2="32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="32" y1="10" x2="32" y2="22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="32" y1="42" x2="32" y2="54" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">API Automation</h3>
+          <p class="sc-desc">Streamline your workflow and connect systems with powerful APIs. Automate repetitive tasks and boost efficiency.</p>
+          <div class="sc-brands">
+            <span class="brand-tag">REST APIs</span>
+            <span class="brand-tag">Webhooks</span>
+            <span class="brand-tag">Integrations</span>
+          </div>
+          <a href="#contact" class="sc-link" id="sc-api-link">Automate Now</a>
+        </div>
+
+        <div class="service-card service-card-wide" id="service-apps">
+          <div class="sc-icon-wrap">
+            <svg class="sc-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="16" y="4" width="22" height="40" rx="5" stroke="currentColor" stroke-width="3"/>
+              <circle cx="27" cy="38" r="2" fill="currentColor"/>
+              <line x1="22" y1="10" x2="32" y2="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <rect x="20" y="16" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.6"/>
+              <rect x="28" y="16" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.6"/>
+              <rect x="20" y="25" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.6"/>
+              <rect x="28" y="25" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.6"/>
+              <circle cx="46" cy="30" r="14" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M40 30l4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">Apps &amp; Telegram Bots Design</h3>
+          <p class="sc-desc">Custom mobile apps and smart Telegram bots built to scale your ideas. We turn your vision into powerful digital tools.</p>
+          <div class="sc-brands">
+            <span class="brand-tag">Mobile Apps</span>
+            <span class="brand-tag">Telegram Bots</span>
+            <span class="brand-tag">Custom Solutions</span>
+            <span class="brand-tag">Scalable</span>
+          </div>
+          <a href="#contact" class="sc-link" id="sc-apps-link">Build With Us</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GIFT CARDS SHOWCASE -->
+  <section class="giftcards-section" id="gift-cards">
+    <div class="section-container">
+      <div class="gc-layout">
+        <div class="gc-left" id="gc-left">
+          <span class="section-tag">Instant. Safe. Trusted.</span>
+          <h2 class="section-title" class="section-title on-dark" id="gc-title">We Buy All <span class="blue">Gift Cards</span></h2>
+          <p class="section-desc" class="section-desc on-dark" id="gc-desc">Get the best rates for your unused gift cards. We process transactions instantly and pay securely.</p>
+          <div class="gc-cards-list" id="gc-cards-list">
+            <div class="gc-brand-item" id="gcb-apple">
+              <img src="images/gc_apple.jpg" class="gc-brand-img" alt="Apple Gift Card" />
+              <div class="gc-brand-info">
+                <span class="gc-brand-name">Apple</span>
+                <span class="gc-brand-sub">iTunes &amp; App Store</span>
+              </div>
+              <span class="gc-rate-badge">Best Rate</span>
+            </div>
+            <div class="gc-brand-item" id="gcb-amazon">
+              <img src="images/gc_amazon.jpg" class="gc-brand-img" alt="Amazon Gift Card" />
+              <div class="gc-brand-info">
+                <span class="gc-brand-name">Amazon</span>
+                <span class="gc-brand-sub">All denominations</span>
+              </div>
+              <span class="gc-rate-badge">Best Rate</span>
+            </div>
+            <div class="gc-brand-item" id="gcb-google">
+              <img src="images/gc_google.jpg" class="gc-brand-img" alt="Google Play Gift Card" />
+              <div class="gc-brand-info">
+                <span class="gc-brand-name">Google Play</span>
+                <span class="gc-brand-sub">Play Store Credits</span>
+              </div>
+              <span class="gc-rate-badge">Best Rate</span>
+            </div>
+            <div class="gc-brand-item" id="gcb-ps">
+              <img src="images/gc_playstation.jpg" class="gc-brand-img" alt="PlayStation Gift Card" />
+              <div class="gc-brand-info">
+                <span class="gc-brand-name">PlayStation</span>
+                <span class="gc-brand-sub">PSN Cards</span>
+              </div>
+              <span class="gc-rate-badge">Best Rate</span>
+            </div>
+            <div class="gc-brand-item" id="gcb-vanilla">
+              <img src="images/gc_vanilla.jpg" class="gc-brand-img" alt="Vanilla Gift Card" />
+              <div class="gc-brand-info">
+                <span class="gc-brand-name">Vanilla</span>
+                <span class="gc-brand-sub">Gift Cards</span>
+              </div>
+              <span class="gc-rate-badge">Best Rate</span>
+            </div>
+            <div class="gc-brand-item" id="gcb-visa">
+              <img src="images/gc_visa.jpg" class="gc-brand-img" alt="VISA Gift Card" />
+              <div class="gc-brand-info">
+                <span class="gc-brand-name">VISA</span>
+                <span class="gc-brand-sub">Prepaid Cards</span>
+              </div>
+              <span class="gc-rate-badge">Best Rate</span>
+            </div>
+            <div class="gc-brand-item" id="gcb-mc">
+              <img src="images/gc_mastercard.jpg" class="gc-brand-img" alt="MasterCard Gift Card" />
+              <div class="gc-brand-info">
+                <span class="gc-brand-name">MasterCard</span>
+                <span class="gc-brand-sub">Gift Cards</span>
+              </div>
+              <span class="gc-rate-badge">Best Rate</span>
+            </div>
+            <div class="gc-brand-item" id="gcb-steam">
+              <img src="images/gc_steam.jpg" class="gc-brand-img" alt="Steam Gift Card" />
+              <div class="gc-brand-info">
+                <span class="gc-brand-name">Steam</span>
+                <span class="gc-brand-sub">Gaming Credits</span>
+              </div>
+              <span class="gc-rate-badge">Best Rate</span>
+            </div>
+          </div>
+          <p class="gc-more">And many more... <strong>Contact us</strong> for the full list!</p>
+          <a href="#contact" class="btn-primary" id="gc-sell-btn">Sell Your Gift Card Now</a>
+        </div>
+        <div class="gc-right" id="gc-right">
+          <div class="gc-visual" id="gc-visual">
+            <div class="gc-card-stack">
+              <img src="images/gc_amazon.jpg"      class="gc-card-img" id="gcs-amazon"      alt="Amazon Gift Card"      style="transform:rotate(-6deg); top:0;    left:55px; z-index:1;" />
+              <img src="images/gc_apple.jpg"       class="gc-card-img" id="gcs-apple"       alt="Apple Gift Card"       style="transform:rotate(-2deg); top:22px; left:30px; z-index:2;" />
+              <img src="images/gc_playstation.jpg" class="gc-card-img" id="gcs-ps"          alt="PlayStation Gift Card" style="transform:rotate(4deg);  top:44px; left:75px; z-index:3;" />
+              <img src="images/gc_google.jpg"      class="gc-card-img" id="gcs-google"      alt="Google Play Gift Card" style="transform:rotate(-4deg); top:85px; left:10px; z-index:4;" />
+              <img src="images/gc_visa.jpg"        class="gc-card-img" id="gcs-visa"        alt="VISA Gift Card"        style="transform:rotate(2deg);  top:115px;left:65px; z-index:5;" />
+              <img src="images/gc_steam.jpg"       class="gc-card-img" id="gcs-steam"       alt="Steam Gift Card"       style="transform:rotate(-1deg); top:138px;left:40px; z-index:6;" />
+            </div>
+            <div class="gc-badge-row">
+              <div class="gc-badge" id="gcb-instant">Instant</div>
+              <div class="gc-badge" id="gcb-safe">Safe</div>
+              <div class="gc-badge" id="gcb-trusted">Trusted</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-section" id="why-us">
+    <div class="section-container">
+      <div class="section-header" id="why-header">
+        <span class="section-tag">Our Advantage</span>
+        <h2 class="section-title" class="section-title on-light" id="why-title">Why Choose <span class="blue">Ragnar Solutions?</span></h2>
+      </div>
+      <div class="why-grid" id="why-grid">
+        <div class="why-card" id="why-rates">
+          <div class="why-icon-wrap">
+            <svg class="why-icon" viewBox="0 0 48 48" fill="none">
+              <path d="M24 4L29.5 16.5L44 18.5L34 28L36.5 42L24 35.5L11.5 42L14 28L4 18.5L18.5 16.5L24 4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="why-title-card">Best Rates</h3>
+          <p class="why-desc">We offer the most competitive rates on gift cards and crypto guaranteed.</p>
+        </div>
+        <div class="why-card" id="why-payments">
+          <div class="why-icon-wrap">
+            <svg class="why-icon" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="why-title-card">Instant Payments</h3>
+          <p class="why-desc">Get paid immediately after every transaction. No delays, no waiting.</p>
+        </div>
+        <div class="why-card" id="why-secure">
+          <div class="why-icon-wrap">
+            <svg class="why-icon" viewBox="0 0 48 48" fill="none">
+              <path d="M24 4L8 10V22C8 31.9 15.1 41.2 24 44C32.9 41.2 40 31.9 40 22V10L24 4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M18 24l4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="why-title-card">100% Secure</h3>
+          <p class="why-desc">Your transactions and data are fully protected with industry-grade security.</p>
+        </div>
+        <div class="why-card" id="why-trusted">
+          <div class="why-icon-wrap">
+            <svg class="why-icon" viewBox="0 0 48 48" fill="none">
+              <circle cx="18" cy="14" r="7" stroke="currentColor" stroke-width="2.5"/>
+              <circle cx="34" cy="16" r="6" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M4 38C4 30 10 26 18 26S32 30 32 38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M32 28C34 26 36 26 38 26C42 26 46 28 46 38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="why-title-card">Trusted &amp; Reliable</h3>
+          <p class="why-desc">Hundreds of satisfied customers trust Ragnar Solutions for all their digital needs.</p>
+        </div>
+        <div class="why-card" id="why-support">
+          <div class="why-icon-wrap">
+            <svg class="why-icon" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M16 20C16 15.6 19.6 12 24 12C28.4 12 32 15.6 32 20C32 22.8 30.4 25.2 28 26.4V28H20V26.4C17.6 25.2 16 22.8 16 20Z" stroke="currentColor" stroke-width="2.5"/>
+              <rect x="20" y="32" width="8" height="4" rx="2" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3 class="why-title-card">24/7 Support</h3>
+          <p class="why-desc">We are always available around the clock to help with any questions or issues.</p>
+        </div>
+      </div>
+
+      <div class="cta-banner" id="cta-banner">
+        <div class="cta-banner-rocket" id="cta-rocket">&#128640;</div>
+        <div class="cta-banner-text" id="cta-banner-text">
+          <h3>Let's Build, Automate and Elevate Together!</h3>
+          <p class="blue-text"><strong>ONE STOP. ENDLESS SOLUTIONS.</strong></p>
+        </div>
+        <a href="#contact" class="btn-primary" id="cta-banner-btn">Get Started Today</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="section-container">
+      <div class="section-header" id="contact-header">
+        <span class="section-tag">Connect With Us</span>
+        <h2 class="section-title" class="section-title on-dark" id="contact-title">Get In <span class="blue">Touch</span></h2>
+        <p class="section-desc" class="section-desc on-dark" id="contact-desc">Ready to get started? Reach out through any of our channels and we'll respond instantly.</p>
+      </div>
+
+      <div class="contact-layout" id="contact-layout">
+        <div class="contact-form-wrap" id="contact-form-wrap">
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="form-group" id="fg-name">
+              <label for="input-name" class="form-label">Full Name</label>
+              <input type="text" id="input-name" name="name" class="form-input" placeholder="Your full name" required />
+            </div>
+            <div class="form-group" id="fg-email">
+              <label for="input-email" class="form-label">Email Address</label>
+              <input type="email" id="input-email" name="email" class="form-input" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group" id="fg-service">
+              <label for="input-service" class="form-label">Service Interested In</label>
+              <select id="input-service" name="service" class="form-input form-select" required>
+                <option value="">Select a service...</option>
+                <option value="gift-cards">Buy Gift Cards</option>
+                <option value="crypto">Buy &amp; Sell Crypto</option>
+                <option value="website">Website Creation</option>
+                <option value="api">API Automation</option>
+                <option value="apps-bots">Apps &amp; Telegram Bots</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group" id="fg-message">
+              <label for="input-message" class="form-label">Message</label>
+              <textarea id="input-message" name="message" class="form-input form-textarea" rows="5" placeholder="Tell us more about your needs..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary btn-full" id="form-submit-btn">Send Message</button>
+            <div class="form-success" id="form-success" style="display:none;">
+              Message sent! We will get back to you shortly.
+            </div>
+          </form>
+        </div>
+
+        <div class="contact-socials-wrap" id="contact-socials-wrap">
+          <h3 class="socials-title" id="socials-title">Find Us On</h3>
+          <div class="social-cards" id="social-cards">
+            <a href="https://snapchat.com/add/RagnarSolutions" target="_blank" rel="noopener" class="social-card" id="social-snapchat">
+              <div class="social-icon snapchat-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.002 2.004C6.477 2.004 2 6.481 2 12.006s4.477 10.002 10.002 10.002S22 17.531 22 12.006 17.527 2.004 12.002 2.004zm5.404 13.104c-.066.138-.198.213-.352.213-.058 0-.12-.012-.181-.038-1.054-.437-1.768-.34-2.593.215l-.085.063c-.505.38-1.062.8-2.193.8-1.13 0-1.69-.42-2.194-.8l-.086-.063c-.824-.554-1.534-.65-2.583-.215-.063.026-.124.038-.182.038-.155 0-.286-.075-.353-.213-.09-.185-.02-.41.175-.513.027-.015 1.05-.485 1.58-.485.132 0 .248.026.343.08-.142-.56-.337-1.445-.337-2.248 0-1.724 1.163-2.93 2.636-2.93.39 0 .757.09 1.072.267.072.04.152.059.238.059s.166-.02.238-.059c.315-.177.681-.267 1.072-.267 1.473 0 2.636 1.206 2.636 2.93 0 .803-.195 1.688-.337 2.248.095-.054.21-.08.343-.08.531 0 1.553.47 1.58.485.196.103.266.328.177.513z"/></svg>
+              </div>
+              <div class="social-info">
+                <span class="social-name">Snapchat</span>
+                <span class="social-handle">@RagnarSolutions</span>
+              </div>
+              <span class="social-arrow">&#8594;</span>
+            </a>
+            <a href="https://instagram.com/RagnarSolutions" target="_blank" rel="noopener" class="social-card" id="social-instagram">
+              <div class="social-icon instagram-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </div>
+              <div class="social-info">
+                <span class="social-name">Instagram</span>
+                <span class="social-handle">@RagnarSolutions</span>
+              </div>
+              <span class="social-arrow">&#8594;</span>
+            </a>
+            <a href="https://t.me/RagnarSolutions" target="_blank" rel="noopener" class="social-card" id="social-telegram">
+              <div class="social-icon telegram-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              </div>
+              <div class="social-info">
+                <span class="social-name">Telegram</span>
+                <span class="social-handle">@RagnarSolutions</span>
+              </div>
+              <span class="social-arrow">&#8594;</span>
+            </a>
+            <a href="https://wa.me/RagnarSolutions" target="_blank" rel="noopener" class="social-card" id="social-whatsapp">
+              <div class="social-icon whatsapp-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </div>
+              <div class="social-info">
+                <span class="social-name">WhatsApp</span>
+                <span class="social-handle">@RagnarSolutions</span>
+              </div>
+              <span class="social-arrow">&#8594;</span>
+            </a>
+          </div>
+
+          <div class="contact-info-box" id="contact-info-box">
+            <h4 id="cib-title">Quick Response Guarantee</h4>
+            <p id="cib-desc">We respond to all inquiries within minutes. Available 24/7 across all platforms.</p>
+            <div class="response-time-row" id="response-time-row">
+              <div class="rt-item" id="rt-telegram">
+                <span>Telegram</span>
+                <strong>~5 min</strong>
+              </div>
+              <div class="rt-item" id="rt-whatsapp">
+                <span>WhatsApp</span>
+                <strong>~5 min</strong>
+              </div>
+              <div class="rt-item" id="rt-instagram">
+                <span>Instagram</span>
+                <strong>~15 min</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="footer-container">
+      <div class="footer-brand" id="footer-brand">
+        <span class="footer-brand-text">
+          <span class="footer-brand-ragnar">RAGNAR</span>
+          <span class="footer-brand-solutions">SOLUTIONS</span>
+        </span>
+        <p class="footer-tagline" id="footer-tagline">Powering Digital Success</p>
+      </div>
+      <div class="footer-links" id="footer-links">
+        <div class="footer-col" id="fc-services-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services" id="fl-giftcards">Gift Cards</a></li>
+            <li><a href="#services" id="fl-crypto">Cryptocurrency</a></li>
+            <li><a href="#services" id="fl-website">Website Creation</a></li>
+            <li><a href="#services" id="fl-api">API Automation</a></li>
+            <li><a href="#services" id="fl-apps">Apps &amp; Bots</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" id="fc-connect-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://snapchat.com/add/RagnarSolutions" target="_blank" id="fl-snapchat">Snapchat</a></li>
+            <li><a href="https://instagram.com/RagnarSolutions" target="_blank" id="fl-instagram">Instagram</a></li>
+            <li><a href="https://t.me/RagnarSolutions" target="_blank" id="fl-telegram">Telegram</a></li>
+            <li><a href="https://wa.me/RagnarSolutions" target="_blank" id="fl-whatsapp">WhatsApp</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" id="fc-trust-col">
+          <h4>Account</h4>
+          <ul>
+            <li><a href="login.html"     id="fl-signin">Sign In</a></li>
+            <li><a href="register.html"  id="fl-register">Create Account</a></li>
+            <li><a href="dashboard.html" id="fl-dashboard">My Dashboard</a></li>
+            <li><a href="admin.html"     id="fl-admin">Admin Panel</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" id="fc-why-col">
+          <h4>Why Ragnar</h4>
+          <ul>
+            <li id="fl-rates">Best Rates</li>
+            <li id="fl-instant">Instant Payments</li>
+            <li id="fl-secure">100% Secure</li>
+            <li id="fl-trusted">Trusted &amp; Reliable</li>
+            <li id="fl-support">24/7 Support</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom" id="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="footer-shield" id="footer-shield">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5L12 2z"/>
+            <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p id="footer-copy">RAGNAR SOLUTIONS &ndash; Powering Digital Success &nbsp;|&nbsp; &copy; 2025 All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script>
+    /* Swap auth buttons for Dashboard link if user is already signed in */
+    (function () {
+      const session = getSession();
+      const row = document.getElementById('nav-auth-row');
+      if (!session || !row) return;
+      const dest = session.role === 'admin' ? 'admin.html' : 'dashboard.html';
+      row.innerHTML = `
+        <span style="font-size:0.8rem;color:var(--text-2);">Hi, ${session.name.split(' ')[0]}</span>
+        <a href="${dest}" style="
+          padding:8px 18px;border-radius:50px;font-size:0.85rem;font-weight:700;
+          background:linear-gradient(135deg,#1a6dff,#3d8bff);color:#fff;
+          box-shadow:0 2px 12px rgba(26,109,255,0.35);white-space:nowrap;">
+          My Dashboard
+        </a>`;
+    })();
+  </script>
+</body>
+</html>
+

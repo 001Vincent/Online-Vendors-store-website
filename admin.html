@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — Ragnar Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+
+<div class="dash-layout">
+
+  <!-- ===== ADMIN SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="sidebar-logo">
+      <img src="images/rs_icon.png" alt="RS" />
+      <div class="sidebar-logo-text">
+        <span class="slr">RAGNAR</span>
+        <span class="sls">Admin Panel</span>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Dashboard</span>
+      <a href="#" class="sidebar-link active" data-tab="overview" id="nav-overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Overview
+      </a>
+
+      <span class="nav-section-label">Management</span>
+      <a href="#" class="sidebar-link" data-tab="users" id="nav-users">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="18" cy="8" r="3"/><path d="M21 20c0-2.8-2-5-5-5"/></svg>
+        Users
+        <span class="badge" id="users-badge">0</span>
+      </a>
+      <a href="#" class="sidebar-link" data-tab="transactions" id="nav-transactions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Transactions
+        <span class="badge" id="txns-badge">0</span>
+      </a>
+
+      <span class="nav-section-label">Config</span>
+      <a href="#" class="sidebar-link" data-tab="rates" id="nav-rates">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        Manage Rates
+      </a>
+      <a href="#" class="sidebar-link" data-tab="crypto" id="nav-crypto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
+        Live Prices
+      </a>
+      <a href="#" class="sidebar-link" data-tab="chats" id="nav-chats">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Live Chats
+        <span class="badge" id="admin-chat-badge">0</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="user-avatar" style="background:linear-gradient(135deg,#ef4444,#f59e0b);" id="admin-avatar">A</div>
+        <div class="user-info">
+          <span class="user-name" id="admin-name">Admin</span>
+          <span class="user-role" style="color:#f59e0b;">Administrator</span>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== ADMIN MAIN ===== -->
+  <div class="dash-main">
+    <header class="dash-topbar">
+      <h1 class="topbar-title" id="topbar-title">Admin Overview</h1>
+      <div class="topbar-actions">
+        <div class="topbar-badge" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);color:#f59e0b;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#f59e0b;display:inline-block;"></span>
+          Admin Mode
+        </div>
+        <a href="index.html" style="font-size:0.82rem;color:var(--text-2);padding:6px 14px;border:1px solid var(--border);border-radius:6px;">← Site</a>
+      </div>
+    </header>
+
+    <div class="dash-content">
+
+      <!-- ===== OVERVIEW TAB ===== -->
+      <div id="tab-overview">
+        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="stat-card blue">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div>
+            <div class="stat-value" id="a-users">0</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+          <div class="stat-card yellow">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+            <div class="stat-value" id="a-pending">0</div>
+            <div class="stat-label">Pending Orders</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="stat-value" id="a-completed">0</div>
+            <div class="stat-label">Completed</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.5 9.5h3a1.5 1.5 0 010 3h-3"/></svg></div>
+            <div class="stat-value" id="a-revenue">$0</div>
+            <div class="stat-label">Total Volume</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Recent Transactions</span>
+              <button onclick="switchTab('transactions')" class="btn-sm outline">View All</button>
+            </div>
+            <table class="data-table">
+              <thead><tr><th>ID</th><th>User</th><th>Type</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="recent-admin-txns"></tbody>
+            </table>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Recent Users</span>
+              <button onclick="switchTab('users')" class="btn-sm outline">View All</button>
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="recent-admin-users"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== USERS TAB ===== -->
+      <div id="tab-users" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">All Users</span>
+            <input placeholder="Search users…" id="user-search" onkeyup="filterUsers()" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;padding:7px 14px;color:var(--text-1);font-size:0.85rem;outline:none;width:200px;" />
+          </div>
+          <table class="data-table" id="users-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="users-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== TRANSACTIONS TAB ===== -->
+      <div id="tab-transactions" style="display:none;">
+        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+          <button onclick="filterTxns('all')"       class="btn-sm primary" id="tf-all">All</button>
+          <button onclick="filterTxns('pending')"   class="btn-sm outline" id="tf-pending">Pending</button>
+          <button onclick="filterTxns('completed')" class="btn-sm outline" id="tf-completed">Completed</button>
+          <button onclick="filterTxns('rejected')"  class="btn-sm outline" id="tf-rejected">Rejected</button>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">All Transactions</span></div>
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>User</th><th>Type</th><th>Details</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="admin-txns-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== RATES TAB ===== -->
+      <div id="tab-rates" style="display:none;">
+        <div class="grid-2">
+          <!-- Gift card rates -->
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Gift Card Rates (%)</span></div>
+            <div class="panel-body">
+              <div class="form-panel" id="rates-form"></div>
+
+              <!-- Exchange rate -->
+              <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+                <label class="fp-label" style="font-size:0.82rem;font-weight:700;">USD &#8594; NGN Exchange Rate</label>
+                <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+                  <span style="font-size:0.9rem;color:var(--text-2);">$1 =</span>
+                  <input class="fp-input" type="number" id="usd-rate-input" placeholder="e.g. 1600" style="width:120px;" />
+                  <span style="font-size:0.85rem;color:var(--text-2);">&#8358;</span>
+                </div>
+                <div style="font-size:0.73rem;color:var(--text-3);margin-top:5px;">Used to calculate NGN payout shown to users on the sell gift card form.</div>
+              </div>
+
+              <button class="btn-auth" style="margin-top:20px;" onclick="saveRatesForm()">Save All Rates</button>
+              <div id="rates-msg" class="auth-success" style="margin-top:12px;"></div>
+            </div>
+          </div>
+
+          <!-- Manual wallet fund -->
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">&#128176; Manual Wallet Fund</span></div>
+            <div class="panel-body">
+              <div class="form-panel">
+                <div style="font-size:0.8rem;color:var(--text-2);margin-bottom:4px;">Credit a user&#39;s Naira Wallet directly (e.g. after receiving external payment for crypto).</div>
+                <div>
+                  <label class="fp-label">Select User</label>
+                  <select class="fp-input" id="mf-user-select" onchange="showUserBalance(this.value)">
+                    <option value="">Choose user&hellip;</option>
+                  </select>
+                </div>
+                <div id="mf-balance-preview" style="display:none;padding:10px 14px;border-radius:8px;background:rgba(26,109,255,0.08);border:1px solid rgba(26,109,255,0.2);font-size:0.83rem;">
+                  <span style="color:var(--text-2);">Current Naira Wallet Balance:</span>
+                  <strong id="mf-balance-val" style="color:var(--green);font-size:1rem;margin-left:8px;">&#8358;0.00</strong>
+                </div>
+                <div>
+                  <label class="fp-label">Amount (&#8358; Naira)</label>
+                  <input class="fp-input" type="number" id="mf-amount" placeholder="e.g. 50000" min="1" />
+                </div>
+                <div>
+                  <label class="fp-label">Description / Note</label>
+                  <input class="fp-input" type="text" id="mf-desc" placeholder="e.g. Payment for BTC purchase" />
+                </div>
+                <div id="mf-error" class="auth-error"></div>
+                <div id="mf-success" class="auth-success"></div>
+                <button class="btn-auth" onclick="doManualFund()">&#10003; Fund Wallet</button>
+              </div>
+            </div>
+          </div>
+          <!-- Add manual transaction -->
+          <div class="panel" style="grid-column:1/-1;">
+            <div class="panel-header"><span class="panel-title">&#128221; Add Manual Transaction Record</span></div>
+            <div class="panel-body">
+              <div class="form-panel">
+                <div style="font-size:0.8rem;color:var(--text-2);margin-bottom:4px;">Create a transaction entry directly against any user account.</div>
+                <div class="fp-row">
+                  <div>
+                    <label class="fp-label">User ID or Email</label>
+                    <input class="fp-input" id="mt-user" placeholder="user@email.com" />
+                  </div>
+                  <div>
+                    <label class="fp-label">Transaction Type</label>
+                    <select class="fp-input" id="mt-type">
+                      <option>Gift Card Sale</option><option>Crypto Buy</option>
+                      <option>Crypto Sell</option><option>Bonus</option><option>Adjustment</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="fp-label">Details</label>
+                    <input class="fp-input" id="mt-details" placeholder="e.g. Apple $100" />
+                  </div>
+                  <div>
+                    <label class="fp-label">Amount ($)</label>
+                    <input class="fp-input" type="number" id="mt-amount" placeholder="0.00" />
+                  </div>
+                  <div>
+                    <label class="fp-label">Status</label>
+                    <select class="fp-input" id="mt-status">
+                      <option value="completed">Completed</option>
+                      <option value="pending">Pending</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="mt-error" class="auth-error"></div>
+                <div id="mt-success" class="auth-success"></div>
+                <button class="btn-auth" style="max-width:220px;" onclick="addManualTxn()">Add Transaction</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ===== CRYPTO PRICES TAB ===== -->
+      <div id="tab-crypto" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Live Cryptocurrency Prices</span>
+            <span class="topbar-badge"><span class="dot-live"></span> Updates every 60s</span>
+          </div>
+          <div class="panel-body">
+            <div class="crypto-grid" id="admin-prices-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));">
+              <div style="text-align:center;color:var(--text-3);padding:20px;grid-column:1/-1;">Loading…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CHATS TAB ===== -->
+      <div id="tab-chats" style="display:none;">
+        <div style="display:grid;grid-template-columns:320px 1fr;height:calc(100vh - 130px);gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;">
+
+          <!-- LEFT: Chat List -->
+          <div style="border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--bg-s);">
+            <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-weight:700;font-size:0.9rem;">All Conversations</span>
+              <div style="display:flex;gap:6px;">
+                <button class="btn-sm outline" id="af-all"    onclick="adminFilterChats('all')"    style="font-size:0.7rem;padding:3px 8px;">All</button>
+                <button class="btn-sm outline" id="af-open"   onclick="adminFilterChats('open')"   style="font-size:0.7rem;padding:3px 8px;">Open</button>
+                <button class="btn-sm outline" id="af-txn"    onclick="adminFilterChats('transaction')" style="font-size:0.7rem;padding:3px 8px;">TXN</button>
+              </div>
+            </div>
+            <div id="admin-chat-list" style="flex:1;overflow-y:auto;"></div>
+          </div>
+
+          <!-- RIGHT: Active Chat -->
+          <div style="display:flex;flex-direction:column;background:var(--bg-card);">
+            <div id="admin-chat-header" style="padding:16px 20px;border-bottom:1px solid var(--border);">
+              <div style="color:var(--text-3);font-size:0.88rem;">Select a conversation to manage</div>
+            </div>
+            <!-- Transaction Tag -->
+            <div id="admin-txn-tag" style="display:none;margin:12px 16px 0;background:linear-gradient(135deg,rgba(26,109,255,0.1),rgba(26,109,255,0.05));border:1px solid rgba(26,109,255,0.25);border-radius:10px;padding:14px;"></div>
+            <!-- Action Buttons -->
+            <div id="admin-action-bar" style="display:none;padding:12px 16px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.2);">
+              <div style="font-size:0.72rem;font-weight:700;color:var(--text-2);margin-bottom:8px;letter-spacing:0.08em;">TRANSACTION ACTIONS</div>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <input id="admin-fund-amount" type="number" class="fp-input" placeholder="Amount ₦" style="width:130px;padding:8px 12px;font-size:0.85rem;" />
+                <button onclick="adminDoAction('approve')" style="padding:8px 16px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);color:var(--green);border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;">✅ Approve & Fund</button>
+                <button onclick="adminDoAction('reject')"  style="padding:8px 16px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.35);color:var(--red);border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;">❌ Reject</button>
+                <button onclick="adminDoAction('fail')"    style="padding:8px 16px;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.35);color:var(--yellow);border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;">⚠️ Fail</button>
+                <button onclick="adminDoAction('decline')" style="padding:8px 16px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;">🚫 Decline</button>
+              </div>
+              <div id="admin-action-msg" style="font-size:0.78rem;margin-top:8px;"></div>
+            </div>
+            <!-- Messages -->
+            <div id="admin-chat-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;">
+              <div style="text-align:center;color:var(--text-3);margin-top:60px;">&#128172; Select a conversation</div>
+            </div>
+            <!-- Admin Reply Input -->
+            <div id="admin-input-area" style="display:none;padding:10px 14px;border-top:1px solid var(--border);flex-direction:column;gap:8px;">
+              <!-- Image previews -->
+              <div id="admin-img-previews" style="display:none;flex-wrap:wrap;gap:8px;"></div>
+              <!-- Input row -->
+              <div style="display:flex;align-items:center;gap:8px;">
+                <button onclick="document.getElementById('admin-img-pick').click()" title="Attach image"
+                  style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text-2);font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                  &#128206;
+                </button>
+                <input type="file" id="admin-img-pick" multiple accept="image/*" style="display:none;" onchange="adminChatAddImages(this.files)" />
+                <input id="admin-msg-input" class="fp-input" placeholder="Reply to user…" style="flex:1;margin:0;"
+                  onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();adminSendMsg();}" />
+                <button class="btn-sm primary" onclick="adminSendMsg()" style="padding:10px 16px;white-space:nowrap;height:38px;">Reply &#10148;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /tab-chats -->
+
+    </div><!-- /dash-content -->
+  </div><!-- /dash-main -->
+</div>
+
+<button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="auth-firebase.js"></script>
+<script>
+/* ---- Auth guard (async Firebase) ---- */
+let session = null;
+requireAuthAsync('admin').then(async user => {
+  session = user;
+  document.getElementById('admin-avatar').textContent = user.avatar || user.name.charAt(0).toUpperCase();
+  document.getElementById('admin-name').textContent   = user.name;
+  await refreshAll();
+  /* Update chat badge on load */
+  const unread = await getAdminUnreadChats();
+  const badge  = document.getElementById('admin-chat-badge');
+  if (badge) { badge.textContent = unread; badge.style.display = unread > 0 ? 'inline-block' : 'none'; }
+}).catch(() => { window.location.href = 'login.html'; });
+
+/* ---- Tab switching ---- */
+const TABS = ['overview','users','transactions','rates','crypto','chats'];
+async function switchTab(tab) {
+  TABS.forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === tab ? '' : 'none';
+    const link = document.getElementById('nav-' + t);
+    if (link) link.classList.toggle('active', t === tab);
+  });
+  const labels = { overview:'Admin Overview', users:'Users', transactions:'Transactions', rates:'Manage Rates', crypto:'Live Prices', chats:'Live Chats' };
+  document.getElementById('topbar-title').textContent = labels[tab] || tab;
+  if (tab === 'transactions') renderTxnsTable(await getTransactions());
+  if (tab === 'rates')        await loadRates();
+  if (tab === 'crypto')       fetchPrices();
+  if (tab === 'chats')        { adminActiveChatId = null; adminLoadChats(); }
+}
+document.querySelectorAll('[data-tab]').forEach(el =>
+  el.addEventListener('click', e => { e.preventDefault(); switchTab(el.dataset.tab); })
+);
+
+
+/* ---- Refresh all data ---- */
+async function refreshAll() {
+  const [users, txns] = await Promise.all([getAllUsers(), getTransactions()]);
+
+  document.getElementById('users-badge').textContent = users.length;
+  document.getElementById('txns-badge').textContent  = txns.length;
+
+  const pending   = txns.filter(t => t.status === 'pending').length;
+  const completed = txns.filter(t => t.status === 'completed').length;
+  const revenue   = txns.filter(t => t.status === 'completed').reduce((s,t) => s+(t.amount||0), 0);
+
+  document.getElementById('a-users').textContent     = users.length;
+  document.getElementById('a-pending').textContent   = pending;
+  document.getElementById('a-completed').textContent = completed;
+  document.getElementById('a-revenue').textContent   = '$' + revenue.toFixed(2);
+
+  /* Build name lookup from fetched users */
+  const nameMap = {};
+  users.forEach(u => { nameMap[u.id] = u.name; });
+
+  /* Recent txns (overview) */
+  document.getElementById('recent-admin-txns').innerHTML = txns.slice(0,6).map(t => `
+    <tr>
+      <td style="font-size:0.75rem;color:var(--text-3);">${t.id}</td>
+      <td>${nameMap[t.userId] || '—'}</td>
+      <td>${t.type}</td>
+      <td style="font-weight:700;color:var(--green);">$${(t.amount||0).toFixed(2)}</td>
+      <td><span class="status-badge ${t.status}">${t.status}</span></td>
+      <td>
+        <div class="btn-action-group">
+          ${t.status==='pending'?`<button class="btn-sm success" onclick="approveTxn('${t.id}')">✓</button><button class="btn-sm danger" onclick="rejectTxn('${t.id}')">✕</button>`:'—'}
+        </div>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-3);">No transactions</td></tr>';
+
+  /* Recent users (overview) */
+  document.getElementById('recent-admin-users').innerHTML = users.slice(0,5).map(u => `
+    <tr>
+      <td style="font-weight:700;color:var(--text-1);">${u.name}</td>
+      <td style="font-size:0.8rem;">${u.email}</td>
+      <td><span class="status-badge ${u.status}">${u.status}</span></td>
+      <td>
+        <div class="btn-action-group">
+          ${u.status==='active'
+            ? `<button class="btn-sm danger" onclick="banUser('${u.id}')">Ban</button>`
+            : `<button class="btn-sm success" onclick="activateUser('${u.id}')">Unban</button>`}
+        </div>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-3);">No users</td></tr>';
+
+  renderUsersTable(users);
+  renderTxnsTable(txns);
+  await renderRatesForm();
+}
+
+/* ---- Users table ---- */
+let allUsers = [];
+function renderUsersTable(users) {
+  allUsers = users;
+  document.getElementById('users-tbody').innerHTML = users.map(u => `
+    <tr>
+      <td style="font-weight:700;color:var(--text-1);">${u.name}</td>
+      <td style="font-size:0.82rem;">${u.email}</td>
+      <td style="font-size:0.82rem;">${u.phone||'—'}</td>
+      <td style="font-size:0.78rem;">${new Date(u.joinedAt).toLocaleDateString()}</td>
+      <td><span class="status-badge ${u.status}">${u.status}</span></td>
+      <td>
+        <div class="btn-action-group">
+          ${u.status==='active'
+            ? `<button class="btn-sm danger" onclick="banUser('${u.id}')">Ban</button>`
+            : `<button class="btn-sm success" onclick="activateUser('${u.id}')">Unban</button>`}
+        </div>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-3);">No users registered yet.</td></tr>';
+}
+function filterUsers() {
+  const q = document.getElementById('user-search').value.toLowerCase();
+  renderUsersTable(allUsers.filter(u => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)));
+}
+async function banUser(id)      { await updateUserStatus(id,'banned');  await refreshAll(); }
+async function activateUser(id) { await updateUserStatus(id,'active');  await refreshAll(); }
+
+/* ---- Admin chat input + image upload ---- */
+let adminChatImages = [];
+
+function adminChatAddImages(files) {
+  Array.from(files).forEach(file => {
+    if (!file.type.startsWith('image/')) return;
+    if (file.size > 5 * 1024 * 1024) return;
+    if (adminChatImages.length >= 5) return;
+    const reader = new FileReader();
+    reader.onload = ev => { adminChatImages.push({ dataURL: ev.target.result }); renderAdminChatImgPreviews(); };
+    reader.readAsDataURL(file);
+  });
+  const el = document.getElementById('admin-img-pick');
+  if (el) el.value = '';
+}
+function removeAdminChatImage(idx) { adminChatImages.splice(idx, 1); renderAdminChatImgPreviews(); }
+function renderAdminChatImgPreviews() {
+  const el = document.getElementById('admin-img-previews');
+  if (!el) return;
+  if (!adminChatImages.length) { el.style.display='none'; el.innerHTML=''; return; }
+  el.style.display = 'flex';
+  el.innerHTML = adminChatImages.map((img,i) => `
+    <div style="position:relative;width:52px;height:52px;border-radius:6px;overflow:hidden;border:2px solid var(--blue-b);">
+      <img src="${img.dataURL}" style="width:100%;height:100%;object-fit:cover;"/>
+      <button onclick="removeAdminChatImage(${i})" style="position:absolute;top:1px;right:1px;width:15px;height:15px;border-radius:50%;background:rgba(239,68,68,0.9);color:#fff;border:none;font-size:0.6rem;cursor:pointer;font-weight:800;line-height:1;">×</button>
+    </div>`).join('');
+}
+
+/* ---- Transactions table ---- */
+let currentFilter = 'all';
+function renderTxnsTable(txns, nameMap = {}) {
+  const filtered = currentFilter === 'all' ? txns : txns.filter(t => t.status === currentFilter);
+  document.getElementById('admin-txns-tbody').innerHTML = filtered.map(t => `
+    <tr>
+      <td style="font-size:0.75rem;color:var(--text-3);">${t.id}</td>
+      <td>${nameMap[t.userId] || t.userId || '—'}</td>
+      <td>${t.type}</td>
+      <td style="font-size:0.82rem;">${t.details}</td>
+      <td style="font-weight:700;color:var(--green);">$${(t.amount||0).toFixed(2)}</td>
+      <td><span class="status-badge ${t.status}">${t.status}</span></td>
+      <td style="font-size:0.78rem;">${new Date(t.createdAt).toLocaleDateString()}</td>
+      <td>
+        <div class="btn-action-group">
+          ${t.status==='pending'?`<button class="btn-sm success" onclick="approveTxn('${t.id}')">Approve</button><button class="btn-sm danger" onclick="rejectTxn('${t.id}')">Reject</button>`:'—'}
+        </div>
+      </td>
+    </tr>`).join('') || `<tr><td colspan="8" style="text-align:center;padding:28px;color:var(--text-3);">No ${currentFilter} transactions.</td></tr>`;
+}
+async function filterTxns(f) {
+  currentFilter = f;
+  ['all','pending','completed','rejected'].forEach(s => {
+    const btn = document.getElementById('tf-' + s);
+    if (btn) { btn.className = s === f ? 'btn-sm primary' : 'btn-sm outline'; }
+  });
+  const [txns, users] = await Promise.all([getTransactions(), getAllUsers()]);
+  const nameMap = {}; users.forEach(u => { nameMap[u.id] = u.name; });
+  renderTxnsTable(txns, nameMap);
+}
+async function approveTxn(id) { await updateTransactionStatus(id,'completed'); await refreshAll(); }
+async function rejectTxn(id)  { await updateTransactionStatus(id,'rejected');  await refreshAll(); }
+
+/* ---- Rates form ---- */
+async function loadRates() { await renderRatesForm(); }
+async function renderRatesForm() {
+  const config = await getRates();
+  const rates  = config.gcRates || {};
+  const usdRate = config.usdRate || 1600;
+
+  document.getElementById('rates-form').innerHTML = Object.entries(rates).map(([brand, rate]) => `
+    <div style="display:flex;align-items:center;gap:12px;">
+      <label class="fp-label" style="width:130px;flex-shrink:0;">${brand}</label>
+      <input class="fp-input" type="number" min="1" max="100" value="${rate}" id="rate-${brand.replace(/ /g,'-')}" style="width:80px;" />
+      <span style="font-size:0.85rem;color:var(--text-2);">%</span>
+    </div>`).join('');
+
+  const rateEl = document.getElementById('usd-rate-input');
+  if (rateEl) rateEl.value = usdRate;
+
+  const sel = document.getElementById('mf-user-select');
+  if (sel) {
+    const users = await getAllUsers();
+    sel.innerHTML = '<option value="">Choose user\u2026</option>' +
+      users.map(u => `<option value="${u.id}">${u.name} &mdash; ${u.email}</option>`).join('');
+  }
+}
+async function saveRatesForm() {
+  const config  = await getRates();
+  const gcRates = config.gcRates || {};
+  Object.keys(gcRates).forEach(brand => {
+    const inp = document.getElementById('rate-' + brand.replace(/ /g,'-'));
+    if (inp) gcRates[brand] = parseFloat(inp.value) || gcRates[brand];
+  });
+  const rateEl  = document.getElementById('usd-rate-input');
+  const usdRate = rateEl ? parseFloat(rateEl.value) : (config.usdRate || 1600);
+  await saveRates(gcRates, usdRate); /* calls auth-firebase.js saveRates */
+  const msg = document.getElementById('rates-msg');
+  msg.textContent = '\u2713 Rates and exchange rate saved!';
+  msg.classList.add('show');
+  setTimeout(() => msg.classList.remove('show'), 3000);
+}
+
+/* ---- Manual wallet fund ---- */
+async function showUserBalance(userId) {
+  const preview = document.getElementById('mf-balance-preview');
+  const valEl   = document.getElementById('mf-balance-val');
+  if (!userId) { preview.style.display = 'none'; return; }
+  const wallet  = await getUserWallet(userId);
+  const balance = wallet && wallet.naira ? wallet.naira.balance : 0;
+  valEl.textContent = '\u20a6' + parseFloat(balance).toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
+  preview.style.display = 'block';
+}
+
+async function doManualFund() {
+  const userId = document.getElementById('mf-user-select').value;
+  const amount = document.getElementById('mf-amount').value;
+  const desc   = document.getElementById('mf-desc').value.trim();
+  const errEl  = document.getElementById('mf-error');
+  const sucEl  = document.getElementById('mf-success');
+  errEl.classList.remove('show'); sucEl.classList.remove('show');
+  if (!userId) { errEl.textContent = 'Please select a user.'; errEl.classList.add('show'); return; }
+  if (!amount || parseFloat(amount) <= 0) { errEl.textContent = 'Enter a valid amount.'; errEl.classList.add('show'); return; }
+  const result = await manualFundWallet(userId, amount, desc || 'Manual credit by admin');
+  if (result.success) {
+    const users = await getAllUsers();
+    const user  = users.find(u => u.id === userId);
+    const wallet = await getUserWallet(userId);
+    const newBal = wallet.naira.balance;
+    sucEl.textContent = `\u2713 \u20a6${parseFloat(amount).toLocaleString()} credited to ${user ? user.name : 'user'}. New balance: \u20a6${newBal.toLocaleString('en-NG',{minimumFractionDigits:2})}`;
+    sucEl.classList.add('show');
+    document.getElementById('mf-amount').value = '';
+    document.getElementById('mf-desc').value   = '';
+    await showUserBalance(userId);
+    await refreshAll();
+  } else {
+    errEl.textContent = result.message; errEl.classList.add('show');
+  }
+}
+
+/* ---- Manual transaction ---- */
+async function addManualTxn() {
+  const emailOrId = document.getElementById('mt-user').value.trim();
+  const type      = document.getElementById('mt-type').value;
+  const details   = document.getElementById('mt-details').value.trim();
+  const amount    = document.getElementById('mt-amount').value;
+  const status    = document.getElementById('mt-status').value;
+  const errEl     = document.getElementById('mt-error');
+  const sucEl     = document.getElementById('mt-success');
+  errEl.classList.remove('show'); sucEl.classList.remove('show');
+
+  if (!emailOrId || !details || !amount) {
+    errEl.textContent = 'Fill all required fields.'; errEl.classList.add('show'); return;
+  }
+  const users = await getAllUsers();
+  const user  = users.find(u => u.email.toLowerCase() === emailOrId.toLowerCase() || u.id === emailOrId);
+  if (!user) { errEl.textContent = 'User not found.'; errEl.classList.add('show'); return; }
+
+  await addTransaction(user.id, type, details, parseFloat(amount), status);
+  sucEl.textContent = `\u2713 Transaction added for ${user.name}.`;
+  sucEl.classList.add('show');
+  await refreshAll();
+}
+
+/* ---- Live prices ---- */
+const COIN_FULL = { bitcoin:'Bitcoin BTC', ethereum:'Ethereum ETH', solana:'Solana SOL', tether:'USDT', binancecoin:'BNB', ripple:'XRP', dogecoin:'Dogecoin DOGE', cardano:'Cardano ADA' };
+async function fetchPrices() {
+  try {
+    const ids = Object.keys(COIN_FULL).join(',');
+    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
+    const data = await res.json();
+    renderPrices(data);
+  } catch(e) {
+    document.getElementById('admin-prices-grid').innerHTML = '<div style="color:var(--text-3);grid-column:1/-1;text-align:center;padding:20px;">Could not load prices. Check connection.</div>';
+  }
+}
+function renderPrices(data) {
+  document.getElementById('admin-prices-grid').innerHTML = Object.entries(data).map(([id,info]) => {
+    const ch  = (info.usd_24h_change||0).toFixed(2);
+    const cls = info.usd_24h_change >= 0 ? 'up' : 'down';
+    const sign = info.usd_24h_change >= 0 ? '+' : '';
+    const price = info.usd >= 1
+      ? info.usd.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})
+      : info.usd.toFixed(5);
+    return `<div class="crypto-mini"><div class="cm-symbol">${COIN_FULL[id]}</div><div class="cm-price">$${price}</div><div class="cm-change ${cls}">${sign}${ch}%</div></div>`;
+  }).join('');
+}
+setInterval(fetchPrices, 60000);
+
+/* ============================================================
+   ADMIN CHAT MANAGEMENT
+   ============================================================ */
+let adminActiveChatId = null;
+let adminChatFilter = 'all';
+
+function adminLoadChats() {
+  const unread = getAdminUnreadChats();
+  const badge  = document.getElementById('admin-chat-badge');
+  if (badge) { badge.textContent = unread; badge.style.display = unread > 0 ? 'inline-block' : 'none'; }
+
+  let chats = getAllChats();
+  if (adminChatFilter === 'open')        chats = chats.filter(c => c.status === 'open');
+  if (adminChatFilter === 'transaction') chats = chats.filter(c => c.type === 'transaction');
+
+  const listEl = document.getElementById('admin-chat-list');
+  if (!listEl) return;
+
+  if (!chats.length) {
+    listEl.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-3);font-size:0.82rem;">No conversations found.<br><span style="font-size:0.75rem;">Transactions initiated by users will appear here.</span></div>';
+    return;
+  }
+
+  const users = getAllUsers();
+  listEl.innerHTML = chats.map(c => {
+    const owner   = users.find(u => u.id === c.userId);
+    const last    = c.messages[c.messages.length - 1];
+    const lastText = last
+      ? (last.msgType === 'image' ? '[🖼️ Image]' : last.text.substring(0, 42) + (last.text.length > 42 ? '…' : ''))
+      : '';
+    const isActive  = c.id === adminActiveChatId;
+    const unreadCnt = c.unreadAdmin || 0;
+    const typeColor = c.type === 'transaction' ? '#1a6dff' : '#22c55e';
+    const typeLabel = c.type === 'transaction' ? '💳 TXN' : '💬 Support';
+    return `<div onclick="adminOpenChat('${c.id}')" style="padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer;background:${isActive ? 'rgba(26,109,255,0.08)' : 'transparent'};border-left:3px solid ${isActive ? '#1a6dff' : 'transparent'};transition:all 0.15s;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <span style="font-size:0.7rem;font-weight:700;color:${typeColor};">${typeLabel}</span>
+        <div style="display:flex;align-items:center;gap:5px;">
+          ${unreadCnt ? `<span style="background:#ef4444;color:#fff;font-size:0.65rem;font-weight:800;padding:1px 7px;border-radius:50px;">${unreadCnt}</span>` : ''}
+          <span style="font-size:0.7rem;padding:1px 8px;border-radius:50px;background:${c.status === 'closed' ? 'rgba(34,197,94,0.12)' : 'rgba(245,158,11,0.1)'};color:${c.status === 'closed' ? 'var(--green)' : 'var(--yellow)'}">${c.status}</span>
+        </div>
+      </div>
+      <div style="font-size:0.85rem;font-weight:700;color:var(--text-1);">${owner ? owner.name : 'Unknown'}</div>
+      <div style="font-size:0.72rem;color:var(--text-2);">${owner ? owner.email : ''}</div>
+      <div style="font-size:0.73rem;color:var(--text-3);margin-top:3px;">${lastText}</div>
+      <div style="font-size:0.66rem;color:var(--text-3);margin-top:2px;">${new Date(c.updatedAt||c.createdAt).toLocaleString()}</div>
+    </div>`;
+  }).join('');
+  /* NO call to adminOpenChat here - that was causing infinite recursion */
+}
+
+function adminFilterChats(filter) {
+  adminChatFilter = filter;
+  ['all','open','txn'].forEach(f => {
+    const btn = document.getElementById('af-' + f);
+    if (btn) { btn.className = f === filter || (f === 'txn' && filter === 'transaction') ? 'btn-sm primary' : 'btn-sm outline'; }
+  });
+  adminLoadChats();
+}
+
+function adminOpenChat(chatId) {
+  adminActiveChatId = chatId;
+  markChatRead(chatId, 'admin');
+
+  /* Update unread badge without re-rendering the full list */
+  const unread = getAdminUnreadChats();
+  const badge  = document.getElementById('admin-chat-badge');
+  if (badge) { badge.textContent = unread; badge.style.display = unread > 0 ? 'inline-block' : 'none'; }
+
+  /* Highlight active item in list without full re-render */
+  const listEl = document.getElementById('admin-chat-list');
+  if (listEl) {
+    listEl.querySelectorAll('div[onclick]').forEach(el => {
+      const cid = (el.getAttribute('onclick').match(/'([^']+)'/) || [])[1];
+      if (cid) {
+        el.style.background  = cid === chatId ? 'rgba(26,109,255,0.08)' : 'transparent';
+        el.style.borderLeft  = cid === chatId ? '3px solid #1a6dff' : '3px solid transparent';
+        /* Clear unread badge for active chat visually */
+        if (cid === chatId) {
+          const badgeSpan = el.querySelector('span[style*="ef4444"]');
+          if (badgeSpan) badgeSpan.remove();
+        }
+      }
+    });
+  }
+
+  const chat = getChatById(chatId);
+  if (!chat) return;
+
+  const users   = getAllUsers();
+  const owner   = users.find(u => u.id === chat.userId);
+  const headerEl = document.getElementById('admin-chat-header');
+  const typeLabel = chat.type === 'transaction' ? '💳 Transaction Chat' : '💬 Support Chat';
+
+  headerEl.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-weight:800;font-size:0.95rem;">${typeLabel}</div>
+        <div style="font-size:0.8rem;color:var(--text-2);">${owner ? owner.name + ' &nbsp;·&nbsp; ' + owner.email : 'Unknown User'}</div>
+        ${chat.transactionId ? `<div style="font-size:0.75rem;color:var(--blue-b);margin-top:2px;">TXN: ${chat.transactionId}</div>` : ''}
+      </div>
+      <span style="font-size:0.72rem;font-weight:700;padding:3px 12px;border-radius:50px;background:${chat.status === 'closed' ? 'rgba(34,197,94,0.12)' : 'rgba(245,158,11,0.1)'};color:${chat.status === 'closed' ? 'var(--green)' : 'var(--yellow)'}">${chat.status}</span>
+    </div>`;
+
+  /* Transaction tag — with card images if available */
+  const tagEl  = document.getElementById('admin-txn-tag');
+  const tagMsg = chat.messages.find(m => m.msgType === 'txn_tag');
+  if (tagMsg && tagMsg.txnData) {
+    const td = tagMsg.txnData;
+    /* Fetch images from linked transaction in localStorage */
+    const allTxns  = getTransactions();
+    const linkedTxn = allTxns.find(t => t.id === td.id);
+    const imgs = (linkedTxn && linkedTxn.images) ? linkedTxn.images : [];
+
+    tagEl.style.display = 'block';
+    tagEl.innerHTML = `
+      <div style="font-size:0.7rem;font-weight:800;color:var(--blue-b);letter-spacing:0.1em;margin-bottom:10px;">📋 TRANSACTION TAG</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;font-size:0.8rem;margin-bottom:${imgs.length ? '14px' : '0'}">
+        <div><span style="color:var(--text-2);">ID</span><br><strong style="font-family:monospace;font-size:0.72rem;">${td.id}</strong></div>
+        <div><span style="color:var(--text-2);">Type</span><br><strong>${td.type}</strong></div>
+        <div><span style="color:var(--text-2);">Details</span><br><strong>${td.details}</strong></div>
+        <div><span style="color:var(--text-2);">Amount</span><br><strong style="color:var(--green);">$${parseFloat(td.amount||0).toFixed(2)}</strong></div>
+        <div><span style="color:var(--text-2);">Images</span><br><strong style="${imgs.length ? 'var(--blue-b)' : 'var(--text-3)'}">${imgs.length ? imgs.length + ' uploaded' : 'None'}</strong></div>
+      </div>
+      ${imgs.length ? `
+        <div style="font-size:0.7rem;font-weight:700;color:var(--text-2);margin-bottom:8px;letter-spacing:0.06em;">🖼️ CARD IMAGES</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          ${imgs.map((src, i) => `
+            <a href="${src}" target="_blank" title="Click to view full size">
+              <div style="width:100px;height:100px;border-radius:8px;overflow:hidden;border:2px solid rgba(26,109,255,0.35);transition:border-color 0.2s;"
+                onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='rgba(26,109,255,0.35)'">
+                <img src="${src}" alt="Card image ${i+1}" style="width:100%;height:100%;object-fit:cover;" />
+              </div>
+            </a>`).join('')}
+        </div>` : ''}`;
+  } else {
+    tagEl.style.display = 'none';
+  }
+
+  /* Action bar: only for open transaction chats */
+  const actionBar = document.getElementById('admin-action-bar');
+  actionBar.style.display = (chat.type === 'transaction' && chat.status === 'open') ? 'block' : 'none';
+  document.getElementById('admin-action-msg').textContent = '';
+
+  /* Messages */
+  const msgsEl = document.getElementById('admin-chat-messages');
+  const visible = chat.messages.filter(m => m.msgType !== 'txn_tag');
+  msgsEl.innerHTML = visible.map(m => {
+    const isAdmin  = m.senderId === 'admin';
+    const isSystem = m.senderId === 'system';
+    const time     = new Date(m.createdAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    if (isSystem) {
+      return `<div style="text-align:center;"><span style="font-size:0.75rem;color:var(--text-3);background:rgba(255,255,255,0.04);padding:4px 14px;border-radius:50px;">${m.text}</span></div>`;
+    }
+    /* Image bubble */
+    if (m.msgType === 'image' && m.imageData) {
+      const align  = isAdmin ? 'flex-end' : 'flex-start';
+      const radius = isAdmin ? '12px 12px 4px 12px' : '12px 12px 12px 4px';
+      return `<div style="display:flex;flex-direction:column;align-items:${align};gap:3px;">
+        ${!isAdmin ? `<span style="font-size:0.7rem;color:var(--text-2);padding:0 4px;">${m.senderName}</span>` : ''}
+        <a href="${m.imageData}" target="_blank" style="display:block;">
+          <img src="${m.imageData}" style="max-width:200px;max-height:160px;border-radius:${radius};object-fit:cover;cursor:pointer;border:2px solid rgba(255,255,255,0.08);" />
+        </a>
+        <span style="font-size:0.65rem;color:var(--text-3);">${isAdmin ? 'You · ' : ''}${time}</span>
+      </div>`;
+    }
+    const actionColors = { approve:'rgba(34,197,94,0.12)', reject:'rgba(239,68,68,0.12)', fail:'rgba(245,158,11,0.12)', decline:'rgba(239,68,68,0.08)' };
+    const bg     = isAdmin ? (m.msgType === 'action' ? (actionColors[m.action] || 'rgba(26,109,255,0.12)') : 'rgba(26,109,255,0.12)') : 'rgba(255,255,255,0.05)';
+    const align  = isAdmin ? 'flex-end' : 'flex-start';
+    const radius = isAdmin ? '16px 16px 4px 16px' : '16px 16px 16px 4px';
+    return `<div style="display:flex;flex-direction:column;align-items:${align};gap:3px;">
+      ${!isAdmin ? `<span style="font-size:0.7rem;color:var(--text-2);padding:0 4px;">${m.senderName}</span>` : ''}
+      <div style="max-width:75%;background:${bg};color:var(--text-1);padding:10px 14px;border-radius:${radius};font-size:0.87rem;line-height:1.5;">${m.text}</div>
+      <span style="font-size:0.65rem;color:var(--text-3);">${isAdmin ? 'You · ' : ''}${time}</span>
+    </div>`;
+  }).join('');
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+
+  /* Input */
+  const inputArea = document.getElementById('admin-input-area');
+  inputArea.style.display = 'flex';
+}
+
+function adminSendMsg() {
+  if (!adminActiveChatId) return;
+  const input = document.getElementById('admin-msg-input');
+  const text  = input.value.trim();
+  let sent = false;
+  if (text) {
+    sendChatMessage(adminActiveChatId, 'admin', 'Ragnar Admin', text);
+    input.value = '';
+    sent = true;
+  }
+  adminChatImages.forEach(img => {
+    sendChatImage(adminActiveChatId, 'admin', 'Ragnar Admin', img.dataURL);
+    sent = true;
+  });
+  if (adminChatImages.length) {
+    adminChatImages = [];
+    renderAdminChatImgPreviews();
+  }
+  if (sent) adminOpenChat(adminActiveChatId);
+}
+
+function adminDoAction(action) {
+  if (!adminActiveChatId) return;
+  const amount  = document.getElementById('admin-fund-amount').value;
+  const msgEl   = document.getElementById('admin-action-msg');
+
+  if (action === 'approve' && (!amount || parseFloat(amount) <= 0)) {
+    msgEl.style.color = 'var(--red)';
+    msgEl.textContent = 'Please enter the ₦ amount to fund the user wallet.';
+    return;
+  }
+
+  const result = adminActionChat(adminActiveChatId, action, amount);
+  if (result.success) {
+    const actionLabels = { approve:'✅ Approved & wallet funded', reject:'❌ Rejected', fail:'⚠️ Marked as failed', decline:'🚫 Declined' };
+    msgEl.style.color = action === 'approve' ? 'var(--green)' : 'var(--red)';
+    msgEl.textContent = actionLabels[action];
+    document.getElementById('admin-fund-amount').value = '';
+    setTimeout(() => adminOpenChat(adminActiveChatId), 300);
+    refreshAll();
+  }
+}
+
+/* ---- Auto-poll: refresh chats & active conversation ---- */
+setInterval(() => {
+  /* Always update the badge */
+  const badge  = document.getElementById('admin-chat-badge');
+  const unread = getAdminUnreadChats();
+  if (badge) { badge.textContent = unread; badge.style.display = unread > 0 ? 'inline-block' : 'none'; }
+
+  /* If chats tab is visible, refresh list then re-open active chat */
+  const chatsTab = document.getElementById('tab-chats');
+  if (chatsTab && chatsTab.style.display !== 'none') {
+    adminLoadChats(); /* re-renders list with updated highlights */
+    if (adminActiveChatId) {
+      /* Small delay so list renders first, then panel updates */
+      setTimeout(() => adminOpenChat(adminActiveChatId), 50);
+    }
+  }
+}, 8000);
+
+/* Full data refresh every 30s */
+setInterval(() => refreshAll(), 30000);
+</script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — Ragnar Solutions</title>
+  <meta name="description" content="Create your free Ragnar Solutions account and start selling gift cards and trading crypto today." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card" style="max-width:540px;">
+
+      <div class="auth-logo">
+        <img src="images/rs_icon.png" alt="Ragnar Solutions" />
+        <span class="auth-logo-name">RAGNAR</span>
+        <span class="auth-logo-sub">Solutions</span>
+      </div>
+
+      <h1 class="auth-title">Create Account</h1>
+      <p class="auth-subtitle">Join thousands trading with Ragnar Solutions</p>
+
+      <div class="auth-error"   id="reg-error"></div>
+      <div class="auth-success" id="reg-success"></div>
+
+      <form class="auth-form" id="reg-form" novalidate>
+
+        <!-- Name row: First | Middle | Last -->
+        <div class="form-row" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="form-group">
+            <label class="form-label" for="reg-fname">First Name <span style="color:var(--red);">*</span></label>
+            <input type="text" class="form-input" id="reg-fname" placeholder="John" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-mname">Middle Name <span style="color:var(--text-3);font-size:0.75rem;">(optional)</span></label>
+            <input type="text" class="form-input" id="reg-mname" placeholder="Paul" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-lname">Last Name <span style="color:var(--red);">*</span></label>
+            <input type="text" class="form-input" id="reg-lname" placeholder="Doe" required />
+          </div>
+        </div>
+
+        <!-- Username -->
+        <div class="form-group">
+          <label class="form-label" for="reg-username">
+            Username <span style="color:var(--red);">*</span>
+            <span style="font-size:0.73rem;color:var(--text-3);font-weight:400;margin-left:6px;">Letters, numbers, underscores only · 3 changes/year</span>
+          </label>
+          <div style="position:relative;">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-3);font-weight:700;font-size:1rem;">@</span>
+            <input type="text" class="form-input" id="reg-username" placeholder="johndoe123" required autocomplete="username"
+              style="padding-left:30px;" maxlength="20"
+              oninput="this.value=this.value.replace(/[^a-zA-Z0-9_]/g,'')" />
+          </div>
+          <div id="username-hint" style="font-size:0.72rem;color:var(--text-3);margin-top:4px;"></div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="reg-email">Email Address <span style="color:var(--red);">*</span></label>
+          <input type="email" class="form-input" id="reg-email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label class="form-label" for="reg-phone">Phone / WhatsApp Number</label>
+          <input type="tel" class="form-input" id="reg-phone" placeholder="+234 800 000 0000" />
+        </div>
+
+        <!-- Password row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="reg-pass">Password <span style="color:var(--red);">*</span></label>
+            <input type="password" class="form-input" id="reg-pass" placeholder="Min 6 characters" required autocomplete="new-password" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-pass2">Confirm Password <span style="color:var(--red);">*</span></label>
+            <input type="password" class="form-input" id="reg-pass2" placeholder="Re-enter password" required />
+          </div>
+        </div>
+
+        <!-- Country -->
+        <div class="form-group">
+          <label class="form-label" for="reg-country">Country</label>
+          <select class="form-input" id="reg-country" style="appearance:none;">
+            <option value="">Select your country…</option>
+            <option>Nigeria</option><option>Ghana</option><option>Kenya</option>
+            <option>South Africa</option><option>United States</option>
+            <option>United Kingdom</option><option>Canada</option>
+            <option>Australia</option><option>Other</option>
+          </select>
+        </div>
+
+        <!-- Terms -->
+        <div class="checkbox-group">
+          <input type="checkbox" id="reg-terms" />
+          <label class="checkbox-label" for="reg-terms">
+            I agree to the <a href="#" class="auth-link">Terms of Service</a> and <a href="#" class="auth-link">Privacy Policy</a>. I understand transactions are reviewed for security.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-auth" id="reg-btn">Create My Account</button>
+      </form>
+
+      <div class="auth-link-row" style="margin-top:20px;">
+        Already have an account? <a href="login.html" class="auth-link">Sign In</a>
+      </div>
+      <div class="auth-link-row" style="margin-top:8px;">
+        <a href="index.html" class="auth-link" style="font-size:0.82rem;color:var(--text-3);">← Back to Homepage</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="auth-firebase.js"></script>
+  <script>
+    /* Redirect if already signed in — unsubscribe immediately to prevent loop */
+    let _regRedirecting = false;
+    const _unsubReg = auth.onAuthStateChanged(async u => {
+      _unsubReg(); /* fire once only */
+      if (_regRedirecting || !u) return;
+      _regRedirecting = true;
+      try {
+        const snap = await db.collection('users').doc(u.uid).get();
+        if (snap.exists) {
+          const usr = snap.data();
+          window.location.href = usr.role === 'admin' ? 'admin.html' : 'dashboard.html';
+        }
+      } catch(e) { _regRedirecting = false; }
+    });
+
+    /* Live username availability check via Firestore */
+    let usernameCheckTimer;
+    document.getElementById('reg-username').addEventListener('input', function() {
+      const hint = document.getElementById('username-hint');
+      const val  = this.value.trim();
+      if (!val) { hint.textContent = ''; return; }
+      if (val.length < 3) { hint.textContent = 'Too short'; hint.style.color = 'var(--red)'; return; }
+      hint.textContent = 'Checking…'; hint.style.color = 'var(--text-3)';
+      clearTimeout(usernameCheckTimer);
+      usernameCheckTimer = setTimeout(async () => {
+        const snap = await db.collection('users').where('username', '==', val.toLowerCase()).get();
+        if (!snap.empty) {
+          hint.textContent = '✗ Username taken'; hint.style.color = 'var(--red)';
+        } else {
+          hint.textContent = '✓ Available'; hint.style.color = 'var(--green)';
+        }
+      }, 500);
+    });
+
+    document.getElementById('reg-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn   = document.getElementById('reg-btn');
+      const errEl = document.getElementById('reg-error');
+      const sucEl = document.getElementById('reg-success');
+      errEl.classList.remove('show'); sucEl.classList.remove('show');
+
+      const fname    = document.getElementById('reg-fname').value.trim();
+      const mname    = document.getElementById('reg-mname').value.trim();
+      const lname    = document.getElementById('reg-lname').value.trim();
+      const username = document.getElementById('reg-username').value.trim();
+      const email    = document.getElementById('reg-email').value.trim();
+      const phone    = document.getElementById('reg-phone').value.trim();
+      const pass     = document.getElementById('reg-pass').value;
+      const pass2    = document.getElementById('reg-pass2').value;
+      const terms    = document.getElementById('reg-terms').checked;
+
+      if (!fname || !lname || !email || !pass || !username) {
+        errEl.textContent = 'Please fill in all required fields.'; errEl.classList.add('show'); return;
+      }
+      if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+        errEl.textContent = 'Username: 3–20 characters, letters/numbers/underscores only.'; errEl.classList.add('show'); return;
+      }
+      if (pass.length < 6) {
+        errEl.textContent = 'Password must be at least 6 characters.'; errEl.classList.add('show'); return;
+      }
+      if (pass !== pass2) {
+        errEl.textContent = 'Passwords do not match.'; errEl.classList.add('show'); return;
+      }
+      if (!terms) {
+        errEl.textContent = 'Please accept the terms to continue.'; errEl.classList.add('show'); return;
+      }
+
+      btn.disabled = true; btn.textContent = 'Creating account…';
+
+      const result = await registerUser({ email, password: pass, firstName: fname, middleName: mname, lastName: lname, username, phone });
+      if (result.success) {
+        sucEl.textContent = 'Account created! Signing you in…'; sucEl.classList.add('show');
+        /* loginUser already signed in via createUserWithEmailAndPassword */
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+      } else {
+        errEl.textContent = result.message; errEl.classList.add('show');
+        btn.disabled = false; btn.textContent = 'Create My Account';
+      }
+    });
+  </script>
+</body>
+</html>

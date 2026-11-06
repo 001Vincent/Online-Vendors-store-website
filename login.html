@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — Ragnar Solutions</title>
+  <meta name="description" content="Sign in to your Ragnar Solutions account to manage your gift card and crypto transactions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <style>
+    .step { transition: opacity 0.3s, transform 0.3s; }
+    .step.hidden { display:none; }
+    .twofa-badge {
+      display:flex;align-items:center;gap:12px;
+      background:rgba(26,109,255,0.07);
+      border:1px solid rgba(26,109,255,0.25);
+      border-radius:12px;padding:14px 18px;margin-bottom:22px;
+    }
+    .twofa-icon {
+      width:40px;height:40px;border-radius:50%;
+      background:#1a6dff;display:flex;align-items:center;
+      justify-content:center;font-size:1.2rem;flex-shrink:0;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+
+      <div class="auth-logo">
+        <img src="images/rs_icon.png" alt="Ragnar Solutions" />
+        <span class="auth-logo-name">RAGNAR</span>
+        <span class="auth-logo-sub">Solutions</span>
+      </div>
+
+      <div class="auth-error"   id="auth-error"></div>
+      <div class="auth-success" id="auth-success"></div>
+
+      <!-- ===== STEP 1: Email + Password ===== -->
+      <div id="step-login" class="step">
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-subtitle">Sign in to your account to continue</p>
+
+        <form class="auth-form" id="login-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address</label>
+            <input type="email" class="form-input" id="login-email" placeholder="you@example.com" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input type="password" class="form-input" id="login-password" placeholder="••••••••" required autocomplete="current-password" />
+          </div>
+
+          <div style="text-align:right; margin-top:-8px;">
+            <a href="#" class="auth-link" style="font-size:0.83rem;" id="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-auth" id="login-btn">Sign In</button>
+        </form>
+
+        <div class="auth-divider" style="margin-top:24px;">or</div>
+        <div style="display:flex;gap:12px;margin-top:16px;">
+          <a href="https://t.me/RagnarSolutions" target="_blank" style="flex:1;padding:11px;background:rgba(39,174,239,0.08);border:1px solid rgba(39,174,239,0.2);border-radius:8px;text-align:center;font-size:0.82rem;font-weight:600;color:#29b6f6;transition:all 0.2s;" onmouseover="this.style.background='rgba(39,174,239,0.15)'" onmouseout="this.style.background='rgba(39,174,239,0.08)'">
+            📱 Telegram Support
+          </a>
+          <a href="https://wa.me/RagnarSolutions" target="_blank" style="flex:1;padding:11px;background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.2);border-radius:8px;text-align:center;font-size:0.82rem;font-weight:600;color:#4ade80;transition:all 0.2s;" onmouseover="this.style.background='rgba(37,211,102,0.15)'" onmouseout="this.style.background='rgba(37,211,102,0.08)'">
+            💬 WhatsApp
+          </a>
+        </div>
+        <div class="auth-link-row" style="margin-top:24px;">
+          Don't have an account? <a href="register.html" class="auth-link">Create one free</a>
+        </div>
+        <div class="auth-link-row" style="margin-top:8px;">
+          <a href="index.html" class="auth-link" style="font-size:0.82rem; color:var(--text-3);">← Back to Homepage</a>
+        </div>
+      </div>
+
+      <!-- ===== STEP 2: 2FA Verification ===== -->
+      <div id="step-2fa" class="step hidden">
+        <h1 class="auth-title">Two-Factor Auth</h1>
+        <p class="auth-subtitle">Your account is protected with 2FA</p>
+
+        <div class="twofa-badge">
+          <div class="twofa-icon">🔐</div>
+          <div>
+            <div style="font-weight:700;font-size:0.95rem;">Security check required</div>
+            <div style="font-size:0.8rem;color:var(--text-2);margin-top:2px;">Enter the backup code you received when you enabled 2FA.</div>
+          </div>
+        </div>
+
+        <div id="twofa-user-info" style="font-size:0.85rem;color:var(--text-2);margin-bottom:18px;"></div>
+
+        <form class="auth-form" id="twofa-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="twofa-code">Backup Code</label>
+            <input type="text" class="form-input" id="twofa-code"
+              placeholder="XXXXXXXX-XXXXXXXX"
+              style="font-family:monospace;font-size:1.1rem;letter-spacing:0.1em;text-transform:uppercase;"
+              autocomplete="off" spellcheck="false" />
+            <div style="font-size:0.73rem;color:var(--text-3);margin-top:5px;">
+              Find this code in Settings → Two-Factor Authentication.
+            </div>
+          </div>
+          <button type="submit" class="btn-auth" id="twofa-btn">Verify and Sign In</button>
+        </form>
+
+        <div style="margin-top:20px;text-align:center;">
+          <a href="#" class="auth-link" style="font-size:0.83rem;" onclick="goBackToLogin()">← Use a different account</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div id="forgot-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;align-items:center;justify-content:center;">
+    <div style="background:var(--bg-card);border:1px solid var(--border-b);border-radius:16px;padding:36px;max-width:400px;width:90%;">
+      <h3 style="font-size:1.2rem;margin-bottom:8px;color:var(--text-1);">Reset Password</h3>
+      <p style="font-size:0.88rem;color:var(--text-2);margin-bottom:20px;">Contact our support team directly to reset your password.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="https://t.me/RagnarSolutions" target="_blank" class="btn-auth" style="display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;">📱 Contact via Telegram</a>
+      </div>
+      <button onclick="document.getElementById('forgot-modal').style.display='none'" style="margin-top:16px;width:100%;padding:10px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-2);font-size:0.88rem;cursor:pointer;">Close</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="auth-firebase.js"></script>
+  <script>
+    /* Redirect if already signed in — unsubscribe immediately to prevent loop */
+    let _loginRedirecting = false;
+    const _unsubLogin = auth.onAuthStateChanged(async u => {
+      _unsubLogin(); /* fire once only */
+      if (_loginRedirecting || !u) return;
+      _loginRedirecting = true;
+      try {
+        const snap = await db.collection('users').doc(u.uid).get();
+        if (snap.exists) {
+          const usr = snap.data();
+          window.location.href = usr.role === 'admin' ? 'admin.html' : 'dashboard.html';
+        }
+      } catch(e) { _loginRedirecting = false; }
+    });
+
+    let pending2FAUser = null;
+
+    document.getElementById('forgot-link').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('forgot-modal').style.display = 'flex';
+    });
+
+    /* ===== STEP 1 — Email + Password ===== */
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn   = document.getElementById('login-btn');
+      const errEl = document.getElementById('auth-error');
+      const sucEl = document.getElementById('auth-success');
+      errEl.classList.remove('show'); sucEl.classList.remove('show');
+
+      const email    = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      if (!email || !password) {
+        errEl.textContent = 'Please fill in all fields.'; errEl.classList.add('show'); return;
+      }
+
+      btn.disabled = true; btn.textContent = 'Checking…';
+
+      const result = await loginUser(email, password);
+      if (result.success) {
+        const userDoc = result.user;
+        if (userDoc.twoFA && userDoc.twoFA.enabled) {
+          /* 2FA required — sign back out until code verified */
+          await auth.signOut();
+          pending2FAUser = { ...userDoc, _rawEmail: email, _rawPassword: password };
+          document.getElementById('step-login').classList.add('hidden');
+          document.getElementById('step-2fa').classList.remove('hidden');
+          document.getElementById('twofa-user-info').innerHTML =
+            `Signing in as <strong>${userDoc.name}</strong> (@${userDoc.username || userDoc.email})`;
+          btn.disabled = false; btn.textContent = 'Sign In';
+        } else {
+          sucEl.textContent = 'Success! Redirecting…'; sucEl.classList.add('show');
+          setTimeout(() => {
+            window.location.href = userDoc.role === 'admin' ? 'admin.html' : 'dashboard.html';
+          }, 800);
+        }
+      } else {
+        errEl.textContent = result.message; errEl.classList.add('show');
+        btn.disabled = false; btn.textContent = 'Sign In';
+      }
+    });
+
+    /* ===== STEP 2 — 2FA Code ===== */
+    document.getElementById('twofa-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn   = document.getElementById('twofa-btn');
+      const errEl = document.getElementById('auth-error');
+      const sucEl = document.getElementById('auth-success');
+      errEl.classList.remove('show'); sucEl.classList.remove('show');
+      const code = document.getElementById('twofa-code').value.trim();
+      if (!code) { errEl.textContent = 'Enter your backup code.'; errEl.classList.add('show'); return; }
+      btn.disabled = true; btn.textContent = 'Verifying…';
+
+      const valid = await verify2FA(pending2FAUser.id, code);
+      if (valid) {
+        /* Re-sign in now that 2FA passed */
+        await loginUser(pending2FAUser._rawEmail, pending2FAUser._rawPassword);
+        sucEl.textContent = '✓ Identity verified! Redirecting…'; sucEl.classList.add('show');
+        setTimeout(() => {
+          window.location.href = pending2FAUser.role === 'admin' ? 'admin.html' : 'dashboard.html';
+        }, 800);
+      } else {
+        errEl.textContent = 'Invalid backup code.'; errEl.classList.add('show');
+        btn.disabled = false; btn.textContent = 'Verify and Sign In';
+      }
+    });
+
+    function goBackToLogin() {
+      pending2FAUser = null;
+      document.getElementById('twofa-code').value = '';
+      document.getElementById('step-2fa').classList.add('hidden');
+      document.getElementById('step-login').classList.remove('hidden');
+      document.getElementById('auth-error').classList.remove('show');
+      document.getElementById('auth-success').classList.remove('show');
+      document.getElementById('login-btn').disabled = false;
+      document.getElementById('login-btn').textContent = 'Sign In';
+    }
+  </script>
+
+</body>
+</html>

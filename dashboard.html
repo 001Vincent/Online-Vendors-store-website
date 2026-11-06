@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>My Dashboard — Ragnar Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <!-- Lucide icons (crisp SVG, mobile-safe) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    /* Prevent Chrome translate from mangling SVGs into emoji */
+    [data-lucide] { display:inline-block; vertical-align:middle; }
+    .di { display:flex;align-items:center;justify-content:center; }
+  </style>
+</head>
+<body translate="no">
+
+<div class="dash-layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="sidebar-logo">
+      <img src="images/rs_icon.png" alt="RS" />
+      <div class="sidebar-logo-text">
+        <span class="slr">RAGNAR</span>
+        <span class="sls">Solutions</span>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <!-- MAIN -->
+      <span class="nav-section-label">Main</span>
+      <a href="#overview" class="sidebar-link active" data-tab="overview" id="nav-overview">
+        <i data-lucide="layout-dashboard"></i> Overview
+      </a>
+      <a href="#transactions" class="sidebar-link" data-tab="transactions" id="nav-transactions">
+        <i data-lucide="list"></i> Transactions
+        <span class="badge" id="txn-count">0</span>
+      </a>
+
+      <!-- WALLETS -->
+      <span class="nav-section-label">Wallets</span>
+      <a href="#" class="sidebar-link" data-tab="naira-wallet" id="nav-naira-wallet">
+        <i data-lucide="banknote"></i> Naira Wallet
+      </a>
+      <a href="#" class="sidebar-link" data-tab="crypto-wallet" id="nav-crypto-wallet">
+        <i data-lucide="bitcoin"></i> Crypto Wallet
+      </a>
+      <a href="#" class="sidebar-link" data-tab="staking" id="nav-staking">
+        <i data-lucide="zap"></i> Staking
+        <span class="badge" id="stake-badge">0</span>
+      </a>
+
+      <!-- SERVICES -->
+      <span class="nav-section-label">Services</span>
+      <a href="#sell-card" class="sidebar-link" data-tab="sell-card" id="nav-sell-card">
+        <i data-lucide="gift"></i> Sell Gift Card
+      </a>
+      <a href="#buy-crypto" class="sidebar-link" data-tab="buy-crypto" id="nav-buy-crypto">
+        <i data-lucide="arrow-left-right"></i> Buy / Sell Crypto
+      </a>
+
+      <!-- ACCOUNT -->
+      <span class="nav-section-label">Account</span>
+      <a href="#profile" class="sidebar-link" data-tab="profile" id="nav-profile">
+        <i data-lucide="user"></i> My Profile
+      </a>
+      <a href="#crypto-prices" class="sidebar-link" data-tab="crypto-prices" id="nav-prices">
+        <i data-lucide="trending-up"></i> Live Prices
+      </a>
+      <a href="#" class="sidebar-link" data-tab="settings" id="nav-settings">
+        <i data-lucide="settings"></i> Settings
+      </a>
+      <a href="#" class="sidebar-link" data-tab="chat" id="nav-chat">
+        <i data-lucide="message-circle"></i> Live Chat
+        <span class="badge" id="chat-unread-badge">0</span>
+      </a>
+    </nav>
+
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="dash-avatar">?</div>
+        <div class="user-info">
+          <span class="user-name" id="dash-name">Loading…</span><span id="dash-verified-badge" style="display:none;margin-left:5px;color:#1a6dff;font-size:0.85rem;" title="KYC Verified">&#10003;</span>
+          <span class="user-role">Member</span>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="dash-main">
+    <header class="dash-topbar">
+      <!-- Hamburger toggle (top-left, mobile only) -->
+      <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+        <svg id="toggle-icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg id="toggle-icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <!-- Site logo (mobile only) -->
+      <a href="index.html" class="topbar-logo" id="topbar-logo">
+        <img src="images/rs_icon.png" alt="RS" style="width:28px;height:28px;border-radius:6px;" />
+        <span class="topbar-logo-text"><span style="font-weight:900;letter-spacing:.04em;">RAGNAR</span> <span style="font-weight:500;opacity:.7;">Solutions</span></span>
+      </a>
+      <h1 class="topbar-title" id="topbar-title">Overview</h1>
+      <div class="topbar-actions">
+        <div class="topbar-badge"><span class="dot-live"></span> Live</div>
+        <a href="index.html" class="topbar-site-link">← Site</a>
+      </div>
+    </header>
+
+    <div class="dash-content">
+
+      <!-- ===== TAB: OVERVIEW ===== -->
+      <div id="tab-overview">
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-icon"><img src="images/icon_transactions_1785506144306.jpg" alt="Transactions"></div>
+            <div class="stat-value" id="st-total">0</div>
+            <div class="stat-label">Total Transactions</div>
+          </div>
+          <div class="stat-card yellow">
+            <div class="stat-icon"><img src="images/icon_pending_1785506158955.jpg" alt="Pending"></div>
+            <div class="stat-value" id="st-pending">0</div>
+            <div class="stat-label">Pending Review</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon"><img src="images/icon_completed_1785506174267.jpg" alt="Completed"></div>
+            <div class="stat-value" id="st-done">0</div>
+            <div class="stat-label">Completed</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-icon"><img src="images/icon_value_traded_1785506188011.jpg" alt="Value Traded"></div>
+            <div class="stat-value" id="st-amount">$0</div>
+            <div class="stat-label">Total Value Traded</div>
+          </div>
+        </div>
+
+        <!-- Wallet Summary Row -->
+        <h3 style="font-size:0.9rem;font-weight:700;color:var(--text-2);margin-bottom:14px;letter-spacing:0.05em;">MY WALLETS</h3>
+        <div class="stats-grid" style="margin-bottom:28px;">
+
+          <!-- Naira Wallet -->
+          <div class="stat-card" style="cursor:pointer;border-color:rgba(34,197,94,0.2);" onclick="switchTab('naira-wallet')">
+            <div class="stat-icon" style="background:rgba(34,197,94,0.12);">
+              <img src="images/icon_naira_wallet_1785506202059.jpg" alt="Naira Wallet">
+            </div>
+            <div class="stat-value" id="ov-ngn-bal" style="font-size:1.4rem;">&#8358;0.00</div>
+            <div class="stat-label">Naira Wallet</div>
+            <div class="stat-change up" style="margin-top:8px;font-size:0.72rem;">
+              &#8250; Tap to manage
+            </div>
+          </div>
+
+          <!-- Crypto Wallet -->
+          <div class="stat-card" style="cursor:pointer;border-color:rgba(26,109,255,0.2);" onclick="switchTab('crypto-wallet')">
+            <div class="stat-icon" style="background:rgba(26,109,255,0.12);">
+              <img src="images/icon_crypto_wallet_1785506214832.jpg" alt="Crypto Wallet">
+            </div>
+            <div class="stat-value" id="ov-crypto-coins" style="font-size:1.4rem;">8 Coins</div>
+            <div class="stat-label">Crypto Wallet</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;" id="ov-crypto-mini"></div>
+          </div>
+
+          <!-- Staking -->
+          <div class="stat-card" style="cursor:pointer;border-color:rgba(245,158,11,0.2);" onclick="switchTab('staking')">
+            <div class="stat-icon" style="background:rgba(245,158,11,0.12);">
+              <img src="images/icon_staking_1785506229696.jpg" alt="Staking">
+            </div>
+            <div class="stat-value" id="ov-active-stakes" style="font-size:1.4rem;">0</div>
+            <div class="stat-label">Active Stakes</div>
+            <div class="stat-change" id="ov-stake-return" style="margin-top:8px;font-size:0.72rem;color:var(--yellow);">&#8358;0 total returns</div>
+          </div>
+
+        </div>
+
+        <h3 style="font-size:0.9rem;font-weight:700;color:var(--text-2);margin-bottom:14px;letter-spacing:0.05em;">QUICK ACTIONS</h3>
+        <div class="quick-actions">
+          <a class="qa-card" onclick="switchTab('sell-card')" href="javascript:void(0)">
+            <div class="qa-icon" style="background:rgba(26,109,255,0.12);">
+              <img src="images/icon_sell_giftcard_1785506244752.jpg" alt="Sell Gift Card">
+            </div>
+            <div class="qa-title">Sell Gift Card</div>
+            <div class="qa-desc">Best rates, instant pay</div>
+          </a>
+          <a class="qa-card" onclick="switchTab('buy-crypto')" href="javascript:void(0)">
+            <div class="qa-icon" style="background:rgba(245,158,11,0.12);">
+              <img src="images/icon_trade_crypto_1785506259400.jpg" alt="Trade Crypto">
+            </div>
+            <div class="qa-title">Trade Crypto</div>
+            <div class="qa-desc">Buy &amp; sell crypto fast</div>
+          </a>
+          <a class="qa-card" onclick="switchTab('transactions')" href="javascript:void(0)">
+            <div class="qa-icon" style="background:rgba(34,197,94,0.12);">
+              <img src="images/icon_history_1785506273258.jpg" alt="Transaction History">
+            </div>
+            <div class="qa-title">Transaction History</div>
+            <div class="qa-desc">View all your trades</div>
+          </a>
+          <a class="qa-card" href="https://t.me/RagnarSolutions" target="_blank">
+            <div class="qa-icon" style="background:rgba(39,174,239,0.12);">
+              <img src="images/icon_support_1785506286690.jpg" alt="Contact Support">
+            </div>
+            <div class="qa-title">Contact Support</div>
+            <div class="qa-desc">We reply in minutes</div>
+          </a>
+        </div>
+      </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Recent Transactions</span>
+            <button onclick="switchTab('transactions')" class="btn-sm outline">View All</button>
+          </div>
+          <div class="panel-body" style="padding:0;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th><th>Type</th><th>Details</th><th>Amount</th><th>Status</th><th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="recent-txns">
+                <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-3);">No transactions yet. Start by selling a gift card!</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: TRANSACTIONS ===== -->
+      <div id="tab-transactions" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">All Transactions</span>
+          </div>
+          <div style="padding:0;">
+            <table class="data-table">
+              <thead>
+                <tr><th>ID</th><th>Type</th><th>Details</th><th>Amount</th><th>Status</th><th>Date</th></tr>
+              </thead>
+              <tbody id="all-txns">
+                <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-3);">No transactions yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: SELL GIFT CARD ===== -->
+      <div id="tab-sell-card" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Sell Your Gift Card</span></div>
+            <div class="panel-body">
+              <div class="form-panel">
+                <div>
+                  <label class="fp-label" for="gc-brand">Gift Card Brand</label>
+                  <select class="fp-input" id="gc-brand">
+                    <option value="">Select brand…</option>
+                    <option value="Apple">Apple iTunes</option>
+                    <option value="Amazon">Amazon</option>
+                    <option value="Google Play">Google Play</option>
+                    <option value="PlayStation">PlayStation (PSN)</option>
+                    <option value="Vanilla">Vanilla</option>
+                    <option value="VISA">VISA Gift Card</option>
+                    <option value="MasterCard">MasterCard</option>
+                    <option value="Steam">Steam</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="fp-row">
+                  <div>
+                    <label class="fp-label" for="gc-amount">Card Amount (USD)</label>
+                    <input class="fp-input" type="number" id="gc-amount" placeholder="e.g. 100" min="1" />
+                  </div>
+                  <div>
+                    <label class="fp-label">Est. Payout (USD)</label>
+                    <div class="fp-input" id="gc-payout" style="color:var(--green);font-weight:700;">$0.00</div>
+                  </div>
+                  <div>
+                    <label class="fp-label">Est. Payout (₦ Naira)</label>
+                    <div class="fp-input" id="gc-payout-ngn" style="color:var(--yellow);font-weight:700;">₦0.00</div>
+                  </div>
+                </div>
+                <div>
+                  <label class="fp-label" for="gc-code">Gift Card Code / Details</label>
+                  <input class="fp-input" type="text" id="gc-code" placeholder="Enter code or upload instructions below" />
+                </div>
+
+                <!-- ── Image Upload Zone ── -->
+                <div>
+                  <label class="fp-label">Card Image(s) <span style="color:var(--red);">*</span>
+                    <span style="font-size:0.73rem;color:var(--text-3);font-weight:400;margin-left:6px;">Front &amp; back recommended</span>
+                  </label>
+
+                  <!-- Drop zone -->
+                  <div id="gc-drop-zone"
+                    style="border:2px dashed rgba(26,109,255,0.35);border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:all 0.25s;background:rgba(26,109,255,0.03);"
+                    onclick="document.getElementById('gc-img-input').click()"
+                    ondragover="event.preventDefault();this.style.borderColor='var(--blue)';this.style.background='rgba(26,109,255,0.08)';"
+                    ondragleave="this.style.borderColor='rgba(26,109,255,0.35)';this.style.background='rgba(26,109,255,0.03)';"
+                    ondrop="handleGCDrop(event)">
+                    <div style="font-size:2rem;margin-bottom:8px;">🖼️</div>
+                    <div style="font-weight:700;font-size:0.9rem;color:var(--text-1);">Drop images here or <span style="color:var(--blue);">browse</span></div>
+                    <div style="font-size:0.75rem;color:var(--text-3);margin-top:4px;">JPG, PNG, WEBP — max 5MB each</div>
+                  </div>
+                  <input type="file" id="gc-img-input" multiple accept="image/*" style="display:none;"
+                    onchange="handleGCFiles(this.files)" />
+
+                  <!-- Preview grid -->
+                  <div id="gc-img-previews" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;"></div>
+                  <div id="gc-img-count" style="font-size:0.75rem;color:var(--text-3);margin-top:6px;"></div>
+                </div>
+
+                <div>
+                  <label class="fp-label" for="gc-notes">Additional Notes</label>
+                  <textarea class="fp-input" id="gc-notes" rows="3" placeholder="Country of card, any pin info, etc."></textarea>
+                </div>
+                <div id="gc-error" class="auth-error"></div>
+                <div id="gc-success" class="auth-success"></div>
+                <button class="btn-auth" onclick="submitGiftCard()">Submit Gift Card</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header"><span class="panel-title">Current Rates</span></div>
+              <div class="panel-body">
+                <table class="data-table">
+                  <thead><tr><th>Card</th><th>Rate</th></tr></thead>
+                  <tbody>
+                    <tr><td>Apple</td><td style="color:var(--green);font-weight:700;">85%</td></tr>
+                    <tr><td>Amazon</td><td style="color:var(--green);font-weight:700;">84%</td></tr>
+                    <tr><td>Google Play</td><td style="color:var(--green);font-weight:700;">80%</td></tr>
+                    <tr><td>PlayStation</td><td style="color:var(--green);font-weight:700;">78%</td></tr>
+                    <tr><td>VISA / MC</td><td style="color:var(--green);font-weight:700;">75%</td></tr>
+                    <tr><td>Steam</td><td style="color:var(--green);font-weight:700;">72%</td></tr>
+                    <tr><td>Vanilla</td><td style="color:var(--green);font-weight:700;">73%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="panel-title">How It Works</span></div>
+              <div class="panel-body" style="display:flex;flex-direction:column;gap:14px;">
+                <div style="display:flex;gap:12px;align-items:flex-start;">
+                  <div style="width:28px;height:28px;border-radius:50%;background:rgba(26,109,255,0.15);color:var(--blue-b);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;flex-shrink:0;">1</div>
+                  <div><div style="font-weight:700;font-size:0.88rem;color:var(--text-1);">Submit your card</div><div style="font-size:0.8rem;color:var(--text-2);">Fill the form and submit card details</div></div>
+                </div>
+                <div style="display:flex;gap:12px;align-items:flex-start;">
+                  <div style="width:28px;height:28px;border-radius:50%;background:rgba(245,158,11,0.15);color:var(--yellow);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;flex-shrink:0;">2</div>
+                  <div><div style="font-weight:700;font-size:0.88rem;color:var(--text-1);">Verification</div><div style="font-size:0.8rem;color:var(--text-2);">Our team verifies your card (5–15 mins)</div></div>
+                </div>
+                <div style="display:flex;gap:12px;align-items:flex-start;">
+                  <div style="width:28px;height:28px;border-radius:50%;background:rgba(34,197,94,0.15);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;flex-shrink:0;">3</div>
+                  <div><div style="font-weight:700;font-size:0.88rem;color:var(--text-1);">Instant Payment</div><div style="font-size:0.8rem;color:var(--text-2);">Receive payment to your preferred method</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: BUY/SELL CRYPTO ===== -->
+      <div id="tab-buy-crypto" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Crypto Trade Request</span></div>
+            <div class="panel-body">
+              <div class="form-panel">
+                <div>
+                  <label class="fp-label" for="crypto-action">Action</label>
+                  <select class="fp-input" id="crypto-action">
+                    <option value="Buy">Buy Crypto</option>
+                    <option value="Sell">Sell Crypto</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="fp-label" for="crypto-coin">Cryptocurrency</label>
+                  <select class="fp-input" id="crypto-coin">
+                    <option>Bitcoin (BTC)</option><option>Ethereum (ETH)</option>
+                    <option>Solana (SOL)</option><option>USDT (Tether)</option>
+                    <option>BNB</option><option>XRP</option><option>Dogecoin</option>
+                  </select>
+                </div>
+                <div class="fp-row">
+                  <div>
+                    <label class="fp-label" for="crypto-usd">Amount (USD)</label>
+                    <input class="fp-input" type="number" id="crypto-usd" placeholder="e.g. 200" />
+                  </div>
+                  <div>
+                    <label class="fp-label" for="crypto-wallet">Your Wallet / Address</label>
+                    <input class="fp-input" type="text" id="crypto-wallet" placeholder="0x… or TRC20…" />
+                  </div>
+                </div>
+                <div>
+                  <label class="fp-label" for="crypto-notes">Notes</label>
+                  <textarea class="fp-input" id="crypto-notes" rows="2" placeholder="Network, payment method, etc."></textarea>
+                </div>
+                <div id="crypto-error" class="auth-error"></div>
+                <div id="crypto-success" class="auth-success"></div>
+                <button class="btn-auth" onclick="submitCrypto()">Submit Trade Request</button>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Live Crypto Prices</span></div>
+            <div class="panel-body">
+              <div class="crypto-grid" id="dash-crypto-grid">
+                <div style="text-align:center;color:var(--text-3);padding:20px;grid-column:1/-1;">Loading prices…</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: CRYPTO PRICES ===== -->
+      <div id="tab-crypto-prices" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Live Cryptocurrency Prices</span>
+            <span class="topbar-badge"><span class="dot-live"></span> Updates every 60s</span>
+          </div>
+          <div class="panel-body">
+            <div class="crypto-grid" id="prices-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));">
+              <div style="text-align:center;color:var(--text-3);padding:20px;grid-column:1/-1;">Loading…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: PROFILE ===== -->
+      <div id="tab-profile" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">My Profile</span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:20px;">
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div class="user-avatar" id="profile-avatar" style="width:64px;height:64px;font-size:1.6rem;">?</div>
+                <div>
+                  <div style="font-size:1.1rem;font-weight:700;color:var(--text-1);" id="profile-name">…</div>
+                  <div style="font-size:0.85rem;color:var(--text-2);" id="profile-email">…</div>
+                  <div class="status-badge active" style="margin-top:6px;">Active Member</div>
+                </div>
+              </div>
+              <hr style="border:none;border-top:1px solid var(--border);" />
+              <table style="width:100%;border-collapse:collapse;">
+                <tr><td style="padding:10px 0;color:var(--text-3);font-size:0.85rem;width:40%;">Email</td><td style="color:var(--text-1);font-size:0.88rem;" id="p-email">…</td></tr>
+                <tr><td style="padding:10px 0;color:var(--text-3);font-size:0.85rem;">Phone</td><td style="color:var(--text-1);font-size:0.88rem;" id="p-phone">…</td></tr>
+                <tr><td style="padding:10px 0;color:var(--text-3);font-size:0.85rem;">Member Since</td><td style="color:var(--text-1);font-size:0.88rem;" id="p-joined">…</td></tr>
+                <tr><td style="padding:10px 0;color:var(--text-3);font-size:0.85rem;">Account Type</td><td><span class="status-badge active">Standard User</span></td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Contact Support</span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:12px;">
+              <p style="font-size:0.88rem;color:var(--text-2);margin-bottom:8px;">Have a question or issue? Reach us instantly:</p>
+              <a href="https://t.me/RagnarSolutions" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(39,174,239,0.06);border:1px solid rgba(39,174,239,0.15);border-radius:10px;color:var(--text-1);transition:all 0.2s;" onmouseover="this.style.background='rgba(39,174,239,0.12)'" onmouseout="this.style.background='rgba(39,174,239,0.06)'">
+                <span style="font-size:1.4rem;">📱</span>
+                <div><div style="font-weight:700;">Telegram</div><div style="font-size:0.78rem;color:var(--text-2);">@RagnarSolutions</div></div>
+              </a>
+              <a href="https://wa.me/RagnarSolutions" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(37,211,102,0.06);border:1px solid rgba(37,211,102,0.15);border-radius:10px;color:var(--text-1);transition:all 0.2s;" onmouseover="this.style.background='rgba(37,211,102,0.12)'" onmouseout="this.style.background='rgba(37,211,102,0.06)'">
+                <span style="font-size:1.4rem;">💬</span>
+                <div><div style="font-weight:700;">WhatsApp</div><div style="font-size:0.78rem;color:var(--text-2);">@RagnarSolutions</div></div>
+              </a>
+              <a href="https://www.instagram.com/RagnarSolutions" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(225,48,108,0.06);border:1px solid rgba(225,48,108,0.15);border-radius:10px;color:var(--text-1);transition:all 0.2s;" onmouseover="this.style.background='rgba(225,48,108,0.12)'" onmouseout="this.style.background='rgba(225,48,108,0.06)'">
+                <span style="font-size:1.4rem;">📸</span>
+                <div><div style="font-weight:700;">Instagram</div><div style="font-size:0.78rem;color:var(--text-2);">@RagnarSolutions</div></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: NAIRA WALLET ===== -->
+      <div id="tab-naira-wallet" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+        <div class="grid-2">
+          <!-- Balance card -->
+          <div style="display:flex;flex-direction:column;gap:20px;">
+            <div class="panel" style="background:linear-gradient(135deg,#0f1a2e,#132038);border-color:rgba(26,109,255,0.3);">
+              <div class="panel-body" style="text-align:center;padding:36px 24px;">
+                <div style="font-size:0.8rem;font-weight:700;letter-spacing:0.12em;color:var(--text-2);text-transform:uppercase;margin-bottom:8px;">Naira Balance</div>
+                <div style="font-size:2.8rem;font-weight:900;color:#fff;" id="ngn-balance">₦0.00</div>
+                <div style="font-size:0.82rem;color:var(--text-2);margin-top:6px;">Available for withdrawal</div>
+                <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;">
+                  <button onclick="showNairaPanel('fund')" class="btn-sm primary" style="padding:10px 24px;font-size:0.88rem;">+ Fund Wallet</button>
+                  <button onclick="showNairaPanel('withdraw')" class="btn-sm outline" style="padding:10px 24px;font-size:0.88rem;">Withdraw</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fund Panel -->
+            <div class="panel" id="naira-fund-panel">
+              <div class="panel-header"><span class="panel-title">Fund Naira Wallet</span></div>
+              <div class="panel-body">
+                <div style="background:rgba(26,109,255,0.06);border:1px solid rgba(26,109,255,0.2);border-radius:10px;padding:16px;margin-bottom:18px;">
+                  <div style="font-size:0.78rem;font-weight:700;color:var(--blue-b);letter-spacing:0.08em;margin-bottom:10px;">RAGNAR SOLUTIONS BANK DETAILS</div>
+                  <div style="display:flex;flex-direction:column;gap:8px;font-size:0.88rem;">
+                    <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-2);">Bank</span><span style="font-weight:700;">Guaranty Trust Bank (GTB)</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-2);">Account No.</span><span style="font-weight:700;font-family:monospace;">0123456789</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-2);">Account Name</span><span style="font-weight:700;">Ragnar Solutions Ltd</span></div>
+                  </div>
+                </div>
+                <div class="form-panel">
+                  <div><label class="fp-label">Amount (₦)</label><input class="fp-input" type="number" id="ngn-fund-amount" placeholder="e.g. 50000" /></div>
+                  <div><label class="fp-label">Payment Reference / Proof</label><input class="fp-input" type="text" id="ngn-fund-ref" placeholder="Transaction ID or reference number" /></div>
+                  <div id="ngn-fund-err" class="auth-error"></div>
+                  <div id="ngn-fund-suc" class="auth-success"></div>
+                  <button class="btn-auth" onclick="submitNairaFund()">Confirm Transfer</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Withdraw Panel -->
+            <div class="panel" id="naira-withdraw-panel" style="display:none;">
+              <div class="panel-header"><span class="panel-title">Withdraw Naira</span></div>
+              <div class="panel-body">
+                <div class="form-panel">
+                  <div class="fp-row">
+                    <div><label class="fp-label">Bank Name</label><input class="fp-input" type="text" id="wd-bank" placeholder="e.g. Access Bank" /></div>
+                    <div><label class="fp-label">Account Number</label><input class="fp-input" type="text" id="wd-acct" placeholder="10-digit number" /></div>
+                  </div>
+                  <div><label class="fp-label">Account Name</label><input class="fp-input" type="text" id="wd-name" placeholder="As on bank record" /></div>
+                  <div><label class="fp-label">Amount (₦)</label><input class="fp-input" type="number" id="wd-amount" placeholder="Min ₦1,000" /></div>
+                  <div id="wd-err" class="auth-error"></div>
+                  <div id="wd-suc" class="auth-success"></div>
+                  <button class="btn-auth" onclick="submitNairaWithdraw()">Request Withdrawal</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Naira Transaction History -->
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Naira Transactions</span></div>
+            <table class="data-table">
+              <thead><tr><th>Type</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody id="ngn-txn-body"><tr><td colspan="4" style="text-align:center;padding:28px;color:var(--text-3);">No transactions yet.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: CRYPTO WALLET ===== -->
+      <div id="tab-crypto-wallet" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+        <div id="cw-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;">
+          <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-3);"><div style="font-size:2rem;margin-bottom:12px;">💎</div><div>Loading crypto wallets…</div></div>
+        </div>
+
+        <!-- Receive Modal -->
+        <div id="receive-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:999;align-items:center;justify-content:center;">
+          <div style="background:var(--bg-card);border:1px solid var(--border-b);border-radius:18px;padding:36px;max-width:420px;width:90%;position:relative;">
+            <h3 style="font-size:1.1rem;margin-bottom:4px;" id="recv-title">Receive BTC</h3>
+            <p style="font-size:0.82rem;color:var(--text-2);margin-bottom:20px;">Send only <span id="recv-coin-warn" style="color:var(--yellow);font-weight:700;">BTC</span> to this address. Wrong network = lost funds.</p>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:14px;word-break:break-all;font-family:monospace;font-size:0.78rem;color:var(--text-1);margin-bottom:14px;" id="recv-address"></div>
+            <button onclick="copyAddress()" class="btn-auth" style="margin-bottom:10px;">📋 Copy Address</button>
+            <button onclick="document.getElementById('receive-modal').style.display='none'" style="width:100%;padding:10px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-2);cursor:pointer;">Close</button>
+          </div>
+        </div>
+
+        <!-- Send Modal -->
+        <div id="send-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:999;align-items:center;justify-content:center;">
+          <div style="background:var(--bg-card);border:1px solid var(--border-b);border-radius:18px;padding:36px;max-width:440px;width:90%;">
+            <h3 style="font-size:1.1rem;margin-bottom:16px;" id="send-title">Send BTC</h3>
+            <div class="form-panel">
+              <div><label class="fp-label">Recipient Address</label><input class="fp-input" type="text" id="send-address" placeholder="Paste wallet address" /></div>
+              <div><label class="fp-label">Amount (<span id="send-coin-label">BTC</span>)</label><input class="fp-input" type="number" id="send-amount" placeholder="0.00" step="0.00000001" /></div>
+              <div style="font-size:0.82rem;color:var(--text-2);">Available: <span id="send-avail" style="color:var(--green);font-weight:700;">0</span></div>
+              <div id="send-err" class="auth-error"></div>
+              <div id="send-suc" class="auth-success"></div>
+              <div style="display:flex;gap:10px;">
+                <button class="btn-auth" onclick="confirmSend()" style="flex:1;">Send</button>
+                <button onclick="document.getElementById('send-modal').style.display='none'" style="flex:1;padding:14px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-2);cursor:pointer;">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: STAKING ===== -->
+      <div id="tab-staking" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+        <div class="grid-2" style="margin-bottom:24px;">
+          <!-- Create Stake -->
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">New Stake</span></div>
+            <div class="panel-body">
+              <div class="form-panel">
+                <div class="fp-row">
+                  <div>
+                    <label class="fp-label">Coin</label>
+                    <select class="fp-input" id="stake-coin" onchange="updateStakePreview()">
+                      <option>BTC</option><option>ETH</option><option>SOL</option>
+                      <option>BNB</option><option>USDT</option><option>XRP</option>
+                      <option>DOGE</option><option>ADA</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="fp-label">Plan</label>
+                    <select class="fp-input" id="stake-plan" onchange="updateStakePreview()">
+                      <option value="weekly">Weekly (7 days)</option>
+                      <option value="monthly">Monthly (30 days)</option>
+                      <option value="yearly">Yearly (365 days)</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label class="fp-label">Amount to Stake</label>
+                  <input class="fp-input" type="number" id="stake-amount" placeholder="0.00" step="0.00000001" oninput="updateStakePreview()" />
+                </div>
+                <!-- Preview card -->
+                <div style="background:rgba(26,109,255,0.06);border:1px solid rgba(26,109,255,0.2);border-radius:10px;padding:16px;" id="stake-preview">
+                  <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;color:var(--blue-b);margin-bottom:10px;">STAKE PREVIEW</div>
+                  <div style="display:flex;flex-direction:column;gap:8px;font-size:0.88rem;">
+                    <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-2);">APY Rate</span><span id="prev-apy" style="color:var(--green);font-weight:700;">—</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-2);">Duration</span><span id="prev-days" style="font-weight:700;">—</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-2);">Expected Return</span><span id="prev-return" style="color:var(--green);font-weight:700;">—</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-2);">Total at Maturity</span><span id="prev-total" style="color:var(--text-1);font-weight:800;">—</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-2);">Matures On</span><span id="prev-date" style="font-weight:700;">—</span></div>
+                  </div>
+                </div>
+                <div id="stake-err" class="auth-error"></div>
+                <div id="stake-suc" class="auth-success"></div>
+                <button class="btn-auth" onclick="submitStake()">Stake Now</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Staking Rates Table -->
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Staking Rates</span></div>
+            <div class="panel-body" style="padding:0;">
+              <table class="data-table">
+                <thead><tr><th>Coin</th><th>Weekly</th><th>Monthly</th><th>Yearly</th></tr></thead>
+                <tbody>
+                  <tr><td style="font-weight:700;">BTC</td><td style="color:var(--green);">1.5%</td><td style="color:var(--green);">5.5%</td><td style="color:var(--green);">22%</td></tr>
+                  <tr><td style="font-weight:700;">ETH</td><td style="color:var(--green);">1.8%</td><td style="color:var(--green);">6.5%</td><td style="color:var(--green);">26%</td></tr>
+                  <tr><td style="font-weight:700;">SOL</td><td style="color:var(--green);">2.5%</td><td style="color:var(--green);">9.0%</td><td style="color:var(--green);">32%</td></tr>
+                  <tr><td style="font-weight:700;">BNB</td><td style="color:var(--green);">2.0%</td><td style="color:var(--green);">7.5%</td><td style="color:var(--green);">28%</td></tr>
+                  <tr><td style="font-weight:700;">USDT</td><td style="color:var(--green);">1.2%</td><td style="color:var(--green);">4.5%</td><td style="color:var(--green);">16%</td></tr>
+                  <tr><td style="font-weight:700;">XRP</td><td style="color:var(--green);">1.6%</td><td style="color:var(--green);">6.0%</td><td style="color:var(--green);">21%</td></tr>
+                  <tr><td style="font-weight:700;">DOGE</td><td style="color:var(--green);">3.0%</td><td style="color:var(--green);">11%</td><td style="color:var(--green);">38%</td></tr>
+                  <tr><td style="font-weight:700;">ADA</td><td style="color:var(--green);">2.2%</td><td style="color:var(--green);">8.5%</td><td style="color:var(--green);">30%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Stakes -->
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">My Stakes</span></div>
+          <table class="data-table">
+            <thead><tr><th>Coin</th><th>Amount</th><th>Plan</th><th>Rate</th><th>Return</th><th>Matures</th><th>Status</th></tr></thead>
+            <tbody id="stakes-tbody"><tr><td colspan="7" style="text-align:center;padding:28px;color:var(--text-3);">No active stakes. Start staking to earn returns!</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== TAB: SETTINGS ===== -->
+      <div id="tab-settings" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+
+        <!-- Row 1: Security + Username -->
+        <div class="grid-2" style="margin-bottom:20px;">
+
+          <!-- Change Password -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">&#128274; Change Password</span>
+            </div>
+            <div class="panel-body">
+              <div class="form-panel">
+                <div><label class="fp-label">Current Password</label><input class="fp-input" type="password" id="s-old-pwd" placeholder="Your current password" /></div>
+                <div><label class="fp-label">New Password</label><input class="fp-input" type="password" id="s-new-pwd" placeholder="Min 8 characters" /></div>
+                <div><label class="fp-label">Confirm New Password</label><input class="fp-input" type="password" id="s-confirm-pwd" placeholder="Repeat new password" /></div>
+                <div id="pwd-err" class="auth-error"></div>
+                <div id="pwd-suc" class="auth-success"></div>
+                <button class="btn-auth" onclick="doChangePassword()">Update Password</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Change Username -->
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">&#64; Change Username</span><span id="uname-changes-badge" style="font-size:0.72rem;padding:3px 10px;border-radius:50px;font-weight:700;"></span></div>
+            <div class="panel-body">
+              <div class="form-panel">
+                <div style="background:rgba(26,109,255,0.06);border:1px solid rgba(26,109,255,0.2);border-radius:10px;padding:12px;margin-bottom:14px;">
+                  <div style="font-size:0.72rem;color:var(--blue-b);font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">CURRENT USERNAME</div>
+                  <div id="s-cur-username" style="font-size:1.05rem;font-weight:800;font-family:monospace;">@loading</div>
+                </div>
+                <div style="font-size:0.78rem;color:var(--text-2);margin-bottom:10px;">
+                  You can change your username <strong id="uname-left" style="color:var(--text-1);">3</strong> more time(s) this year.
+                  Resets on <strong>1 Jan each year</strong>.
+                </div>
+                <div><label class="fp-label">New Username</label>
+                  <div style="position:relative;">
+                    <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-3);font-weight:700;">@</span>
+                    <input class="fp-input" type="text" id="s-new-username" placeholder="newusername" maxlength="20" style="padding-left:26px;"
+                      oninput="this.value=this.value.replace(/[^a-zA-Z0-9_]/g,'')" />
+                  </div>
+                </div>
+                <div id="uname-err" class="auth-error"></div>
+                <div id="uname-suc" class="auth-success"></div>
+                <button class="btn-auth" id="uname-save-btn" onclick="doChangeUsername()">Save Username</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Row 2: 2FA + Security -->
+        <div class="grid-2" style="margin-bottom:20px;">
+          <!-- 2FA Security -->
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">&#128272; Two-Factor Authentication</span></div>
+            <div class="panel-body">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+                <div>
+                  <div style="font-weight:700;margin-bottom:4px;">2FA Status</div>
+                  <div style="font-size:0.82rem;color:var(--text-2);">Adds an extra layer of security to your account</div>
+                </div>
+                <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer;">
+                  <input type="checkbox" id="twofa-toggle" style="opacity:0;width:0;height:0;" onchange="doToggle2FA()" />
+                  <span id="twofa-slider" style="position:absolute;inset:0;background:var(--border);border-radius:28px;transition:0.3s;"></span>
+                  <span id="twofa-knob" style="position:absolute;left:4px;top:4px;width:20px;height:20px;background:#fff;border-radius:50%;transition:0.3s;"></span>
+                </label>
+              </div>
+              <div id="twofa-secret-box" style="display:none;background:rgba(26,109,255,0.06);border:1px solid rgba(26,109,255,0.2);border-radius:10px;padding:14px;">
+                <div style="font-size:0.75rem;font-weight:700;color:var(--blue-b);letter-spacing:0.08em;margin-bottom:8px;">BACKUP CODE</div>
+                <div id="twofa-secret" style="font-family:monospace;font-size:1rem;font-weight:800;letter-spacing:0.15em;color:var(--text-1);"></div>
+                <div style="font-size:0.72rem;color:var(--text-3);margin-top:8px;">Store this code safely. Use it to sign in when 2FA is required.</div>
+              </div>
+              <div id="twofa-msg" class="auth-success" style="margin-top:10px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Contact -->
+        <div class="grid-2" style="margin-bottom:20px;">
+
+          <!-- Change Phone -->
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">&#128222; Change Phone Number</span></div>
+            <div class="panel-body">
+              <div class="form-panel">
+                <div style="font-size:0.82rem;color:var(--text-2);margin-bottom:8px;">Current: <span id="s-cur-phone" style="font-weight:700;color:var(--text-1);">Not set</span></div>
+                <div><label class="fp-label">New Phone Number</label><input class="fp-input" type="tel" id="s-new-phone" placeholder="+234 800 000 0000" /></div>
+                <div id="phone-err" class="auth-error"></div>
+                <div id="phone-suc" class="auth-success"></div>
+                <button class="btn-auth" onclick="doChangePhone()">Update Phone</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Change Email -->
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">&#128140; Change Email Address</span></div>
+            <div class="panel-body">
+              <div class="form-panel">
+                <div style="font-size:0.82rem;color:var(--text-2);margin-bottom:8px;">Current: <span id="s-cur-email" style="font-weight:700;color:var(--text-1);">Loading</span></div>
+                <div><label class="fp-label">New Email Address</label><input class="fp-input" type="email" id="s-new-email" placeholder="new@email.com" /></div>
+                <div id="email-err" class="auth-error"></div>
+                <div id="email-suc" class="auth-success"></div>
+                <button class="btn-auth" onclick="doChangeEmail()">Update Email</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: Bank Account -->
+        <div class="panel" style="margin-bottom:20px;">
+          <div class="panel-header"><span class="panel-title">&#127968; Bank Account</span><span id="bank-saved-badge" style="display:none;font-size:0.72rem;padding:3px 10px;border-radius:50px;background:rgba(34,197,94,0.15);color:var(--green);font-weight:700;">Saved</span></div>
+          <div class="panel-body">
+            <div class="grid-2">
+              <div class="form-panel">
+                <div style="background:rgba(26,109,255,0.06);border:1px solid rgba(26,109,255,0.2);border-radius:10px;padding:14px;margin-bottom:16px;">
+                  <div style="font-size:0.75rem;font-weight:700;color:var(--blue-b);letter-spacing:0.08em;margin-bottom:6px;">ACCOUNT NAME (LOCKED)</div>
+                  <div id="s-bank-acctname" style="font-size:1rem;font-weight:800;color:var(--text-1);">Your registered name</div>
+                  <div style="font-size:0.72rem;color:var(--text-3);margin-top:4px;">Locked to your registration name for security.</div>
+                </div>
+                <div><label class="fp-label">Bank Name</label><input class="fp-input" type="text" id="s-bank-name" placeholder="e.g. First Bank, Access Bank, GTB" /></div>
+                <div><label class="fp-label">Account Number (10 digits)</label><input class="fp-input" type="text" id="s-bank-num" maxlength="10" placeholder="0123456789" /></div>
+                <div id="bank-err" class="auth-error"></div>
+                <div id="bank-suc" class="auth-success"></div>
+                <button class="btn-auth" onclick="doSaveBank()">Save Bank Account</button>
+              </div>
+              <div id="bank-display-card" style="display:none;" class="panel" style="border:none;background:rgba(34,197,94,0.04);">
+                <div style="padding:20px;">
+                  <div style="font-size:0.75rem;font-weight:700;color:var(--green);letter-spacing:0.1em;margin-bottom:14px;">SAVED BANK ACCOUNT</div>
+                  <div style="display:flex;flex-direction:column;gap:10px;font-size:0.9rem;">
+                    <div><span style="color:var(--text-2);">Bank</span><br><strong id="bd-bank"></strong></div>
+                    <div><span style="color:var(--text-2);">Account No.</span><br><strong id="bd-num" style="font-family:monospace;font-size:1.05rem;"></strong></div>
+                    <div><span style="color:var(--text-2);">Account Name</span><br><strong id="bd-name"></strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4: KYC -->
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">&#9989; KYC Verification</span>
+            <span id="kyc-status-badge" style="font-size:0.72rem;padding:3px 10px;border-radius:50px;font-weight:700;"></span>
+          </div>
+          <div class="panel-body">
+            <div id="kyc-verified-banner" style="display:none;background:rgba(26,109,255,0.08);border:1px solid rgba(26,109,255,0.3);border-radius:12px;padding:18px;margin-bottom:18px;display:none;align-items:center;gap:14px;">
+              <div style="width:48px;height:48px;border-radius:50%;background:#1a6dff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">&#10003;</div>
+              <div><div style="font-weight:800;font-size:1.05rem;">Identity Verified</div><div style="color:var(--text-2);font-size:0.82rem;">Your account has a blue verification badge.</div></div>
+            </div>
+            <div id="kyc-form-area">
+              <p style="font-size:0.85rem;color:var(--text-2);margin-bottom:18px;">Submit a clear photo of your ID and a live selfie to get your blue &#10003; verified badge.</p>
+              <div class="grid-2">
+                <!-- ID Upload -->
+                <div class="form-panel">
+                  <div>
+                    <label class="fp-label">ID Type</label>
+                    <select class="fp-input" id="kyc-id-type">
+                      <option value="national_id">National ID Card</option>
+                      <option value="drivers_license">Driver's License</option>
+                      <option value="passport">International Passport</option>
+                      <option value="voter_card">Voter's Card</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="fp-label">Upload ID Document (front)</label>
+                    <input class="fp-input" type="file" id="kyc-id-file" accept="image/*" onchange="previewKYCId(this)" style="padding:8px;" />
+                  </div>
+                  <div id="kyc-id-preview-wrap" style="display:none;">
+                    <img id="kyc-id-preview" style="width:100%;max-height:160px;object-fit:cover;border-radius:10px;border:1px solid var(--border);" />
+                    <div style="font-size:0.75rem;color:var(--green);margin-top:6px;">&#10003; ID uploaded</div>
+                  </div>
+                </div>
+
+                <!-- Face Capture -->
+                <div>
+                  <label class="fp-label">Live Face Capture</label>
+                  <div style="background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;">
+                    <video id="kyc-video" autoplay muted playsinline style="display:none;width:100%;max-height:200px;border-radius:8px;object-fit:cover;"></video>
+                    <canvas id="kyc-canvas" style="display:none;"></canvas>
+                    <img id="kyc-face-preview" style="display:none;width:100%;max-height:200px;border-radius:8px;object-fit:cover;" />
+                    <div id="kyc-camera-placeholder" style="padding:24px 0;">
+                      <div style="font-size:2rem;margin-bottom:8px;">&#128247;</div>
+                      <div style="font-size:0.82rem;color:var(--text-2);">Click to open camera</div>
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:12px;justify-content:center;">
+                      <button class="btn-sm primary" id="kyc-cam-btn" onclick="startKYCCamera()">Open Camera</button>
+                      <button class="btn-sm outline" id="kyc-capture-btn" style="display:none;" onclick="captureKYCFace()">&#128247; Capture</button>
+                      <button class="btn-sm outline" id="kyc-retake-btn" style="display:none;" onclick="retakeKYCFace()">Retake</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="kyc-err" class="auth-error" style="margin-top:14px;"></div>
+              <div id="kyc-suc" class="auth-success" style="margin-top:14px;"></div>
+              <button class="btn-auth" id="kyc-submit-btn" onclick="doSubmitKYC()" style="margin-top:16px;">Submit for Verification</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tab-settings -->
+
+      <!-- ===== TAB: CHAT ===== -->
+      <div id="tab-chat" style="display:none;">
+        <div class="tab-back-bar"><button class="tab-back-btn" onclick="switchTab('overview')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back to Menu</button></div>
+        <div style="display:grid;grid-template-columns:300px 1fr;height:calc(100vh - 130px);gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;">
+
+          <!-- LEFT: Chat List -->
+          <div style="border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--bg-s);">
+            <div style="padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-weight:700;font-size:0.9rem;">Conversations</span>
+              <button class="btn-sm primary" onclick="startSupportChat()" style="font-size:0.72rem;padding:5px 12px;">+ Support</button>
+            </div>
+            <div id="chat-list" style="flex:1;overflow-y:auto;"></div>
+          </div>
+
+          <!-- RIGHT: Active Chat -->
+          <div style="display:flex;flex-direction:column;background:var(--bg-card);">
+            <!-- Header -->
+            <div id="chat-header" style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+              <div style="color:var(--text-3);font-size:0.88rem;">Select a conversation</div>
+            </div>
+            <!-- Transaction tag -->
+            <div id="chat-txn-tag" style="display:none;margin:12px 16px 0;background:linear-gradient(135deg,rgba(26,109,255,0.1),rgba(26,109,255,0.05));border:1px solid rgba(26,109,255,0.25);border-radius:10px;padding:14px;"></div>
+            <!-- Messages -->
+            <div id="chat-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;">
+              <div style="text-align:center;color:var(--text-3);margin-top:60px;">&#128172; Select a conversation to view messages</div>
+            </div>
+            <!-- Input -->
+            <div id="chat-input-area" style="display:none;padding:10px 14px;border-top:1px solid var(--border);flex-direction:column;gap:8px;">
+              <!-- Image previews row -->
+              <div id="chat-img-previews" style="display:none;flex-wrap:wrap;gap:8px;"></div>
+              <!-- Text + buttons row -->
+              <div style="display:flex;align-items:center;gap:8px;">
+                <button onclick="document.getElementById('chat-img-pick').click()" title="Attach image"
+                  style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text-2);font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                  &#128206;
+                </button>
+                <input type="file" id="chat-img-pick" multiple accept="image/*" style="display:none;" onchange="chatAddImages(this.files)" />
+                <input id="chat-msg-input" class="fp-input" placeholder="Type a message…" style="flex:1;margin:0;"
+                  onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendUserMsg();}" />
+                <button class="btn-sm primary" onclick="sendUserMsg()" style="padding:10px 16px;white-space:nowrap;height:38px;">Send &#10148;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /tab-chat -->
+
+    </div><!-- /dash-content -->
+  </div><!-- /dash-main -->
+</div><!-- /dash-layout -->
+
+<!-- Sidebar overlay (mobile: tap outside to close) -->
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="auth-firebase.js"></script>
+<script>
+/* ---- Auth guard (async Firebase) ---- */
+let session = null;
+requireAuthAsync('user').then(user => {
+  session = user;
+  document.getElementById('dash-avatar').textContent = user.avatar || user.name.charAt(0).toUpperCase();
+  document.getElementById('dash-name').textContent   = user.name;
+  loadProfile();
+  loadTransactions();
+  loadCryptoPrices();
+}).catch(err => {
+  /* Only redirect on true auth failures — not Firestore/network errors */
+  const msg = err && err.message ? err.message : '';
+  if (msg === 'Not authenticated' || msg === 'Banned' || msg === 'User doc not found') {
+    window.location.href = 'login.html';
+  } else {
+    console.error('Dashboard init error:', err);
+  }
+});
+
+/* ---- Compat shims: bridge old auth.js calls to Firebase session ---- */
+function getCurrentUser() { return session; }
+async function _getWallet() { return session ? getUserWallet(session.id) : null; }
+async function _getTxns()   { return session ? getTransactions(session.id) : []; }
+
+/* ---- Sidebar toggle (mobile) ---- */
+function toggleSidebar() {
+  const sb  = document.getElementById('sidebar');
+  const ov  = document.getElementById('sidebar-overlay');
+  const ico = document.getElementById('toggle-icon-open');
+  const icx = document.getElementById('toggle-icon-close');
+  const open = sb.classList.toggle('open');
+  if (ov)  ov.classList.toggle('show', open);
+  if (ico) ico.style.display = open ? 'none'  : '';
+  if (icx) icx.style.display = open ? ''      : 'none';
+}
+function closeSidebar() {
+  const sb  = document.getElementById('sidebar');
+  const ov  = document.getElementById('sidebar-overlay');
+  const ico = document.getElementById('toggle-icon-open');
+  const icx = document.getElementById('toggle-icon-close');
+  sb.classList.remove('open');
+  if (ov)  ov.classList.remove('show');
+  if (ico) ico.style.display = '';
+  if (icx) icx.style.display = 'none';
+}
+/* Auto-close sidebar when a nav link is tapped on mobile */
+document.querySelectorAll('.sidebar-link').forEach(el =>
+  el.addEventListener('click', () => { if (window.innerWidth <= 900) closeSidebar(); })
+);
+
+/* ---- Tab switching ---- */
+const TABS = ['overview','transactions','sell-card','buy-crypto','crypto-prices','profile','naira-wallet','crypto-wallet','staking','settings','chat'];
+function switchTab(tab) {
+  TABS.forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === tab ? '' : 'none';
+    const link = document.getElementById('nav-' + t);
+    if (link) link.classList.toggle('active', t === tab);
+  });
+  document.getElementById('topbar-title').textContent = {
+    'overview':'Overview','transactions':'Transactions','sell-card':'Sell Gift Card',
+    'buy-crypto':'Buy / Sell Crypto','crypto-prices':'Live Prices','profile':'My Profile',
+    'naira-wallet':'Naira Wallet','crypto-wallet':'Crypto Wallet','staking':'Staking',
+    'settings':'Settings','chat':'Live Chat'
+  }[tab] || tab;
+  if (tab === 'crypto-prices' || tab === 'buy-crypto') loadCryptoPrices();
+  if (tab === 'naira-wallet')  loadNairaWallet();
+  if (tab === 'crypto-wallet') loadCryptoWallet();
+  if (tab === 'staking')       loadStaking();
+  if (tab === 'settings')      loadSettings();
+  if (tab === 'chat')          loadChats();
+  /* Push state so browser back returns to overview, not login */
+  if (history.state && history.state.tab !== tab) {
+    history.pushState({ tab }, '', '#' + tab);
+  }
+  window.scrollTo(0, 0);
+}
+
+/* Intercept browser/phone back button — stay inside dashboard */
+history.replaceState({ tab: 'overview' }, '', '#overview');
+window.addEventListener('popstate', e => {
+  const tab = (e.state && e.state.tab) ? e.state.tab : 'overview';
+  /* Don't call switchTab (would push another state); just show the tab */
+  TABS.forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === tab ? '' : 'none';
+    const link = document.getElementById('nav-' + t);
+    if (link) link.classList.toggle('active', t === tab);
+  });
+  const titleMap = { 'overview':'Overview','transactions':'Transactions','sell-card':'Sell Gift Card','buy-crypto':'Buy / Sell Crypto','crypto-prices':'Live Prices','profile':'My Profile','naira-wallet':'Naira Wallet','crypto-wallet':'Crypto Wallet','staking':'Staking','settings':'Settings','chat':'Live Chat' };
+  document.getElementById('topbar-title').textContent = titleMap[tab] || tab;
+  if (tab === 'crypto-wallet') loadCryptoWallet();
+  if (tab === 'naira-wallet')  loadNairaWallet();
+  window.scrollTo(0, 0);
+});
+
+
+document.querySelectorAll('[data-tab]').forEach(el =>
+  el.addEventListener('click', e => { e.preventDefault(); switchTab(el.dataset.tab); })
+);
+
+/* ---- Load profile ---- */
+function loadProfile() {
+  const user = session;
+  if (!user) return;
+  const avatar = user.avatar || (user.name ? user.name.charAt(0).toUpperCase() : '?');
+  const el = document.getElementById('profile-avatar');
+  if (el) el.textContent = avatar;
+  const pname = document.getElementById('profile-name'); if (pname) pname.textContent = user.name;
+  const pemail = document.getElementById('profile-email'); if (pemail) pemail.textContent = user.email;
+  const pe = document.getElementById('p-email'); if (pe) pe.textContent = user.email;
+  const pp = document.getElementById('p-phone'); if (pp) pp.textContent = user.phone || 'Not provided';
+  const pj = document.getElementById('p-joined');
+  if (pj) pj.textContent = user.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }) : '—';
+}
+
+/* ---- Load transactions ---- */
+async function loadTransactions() {
+  if (!session) return;
+  let txns = [];
+  try { txns = await getTransactions(session.id); } catch(e) { console.error('loadTransactions:', e); }
+
+  const st = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+  st('txn-count',  txns.length);
+  st('st-total',   txns.length);
+  st('st-pending', txns.filter(t => t.status === 'pending').length);
+  st('st-done',    txns.filter(t => t.status === 'completed').length);
+  st('st-amount',  '$' + txns.reduce((s,t) => s + (t.amount||0), 0).toFixed(2));
+
+  loadWalletSummary();
+  loadStakingBadge(session.id);
+
+  const renderRows = (list, limit) => {
+    if (!list.length) return '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-3);">No transactions yet.</td></tr>';
+    return list.slice(0, limit || list.length).map(t => `
+      <tr>
+        <td style="font-weight:700;color:var(--text-1);font-size:0.8rem;">${t.id}</td>
+        <td>${t.type}</td>
+        <td style="color:var(--text-1);">${t.details}</td>
+        <td style="font-weight:700;color:${t.amount>0?'var(--green)':'var(--text-2)'};">${t.amount>0?'$'+t.amount.toFixed(2):'—'}</td>
+        <td><span class="status-badge ${t.status}">${t.status}</span></td>
+        <td style="font-size:0.78rem;">${new Date(t.createdAt).toLocaleDateString()}</td>
+      </tr>`).join('');
+  };
+
+  const rt = document.getElementById('recent-txns'); if (rt) rt.innerHTML = renderRows(txns, 5);
+  const at = document.getElementById('all-txns');    if (at) at.innerHTML = renderRows(txns);
+}
+
+
+/* ---- Gift card submit ---- */
+const GC_RATES = { Apple:0.85, Amazon:0.84, 'Google Play':0.80, PlayStation:0.78, Vanilla:0.73, VISA:0.75, MasterCard:0.75, Steam:0.72, Other:0.70 };
+document.getElementById('gc-brand').addEventListener('change', updatePayout);
+document.getElementById('gc-amount').addEventListener('input', updatePayout);
+async function updatePayout() {
+  const brand  = document.getElementById('gc-brand').value;
+  const amount = parseFloat(document.getElementById('gc-amount').value) || 0;
+  const rate   = GC_RATES[brand] || 0;
+  const usdPay = amount * rate;
+  let usdRate  = 1600;
+  try { usdRate = await getUSDRate(); } catch(e) {}
+  const ngnPay = usdPay * usdRate;
+  document.getElementById('gc-payout').textContent     = '$' + usdPay.toFixed(2);
+  document.getElementById('gc-payout-ngn').textContent = '\u20a6' + ngnPay.toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+/* ---- Gift card image upload ---- */
+let gcImages = []; // array of { name, dataURL }
+
+function handleGCDrop(e) {
+  e.preventDefault();
+  const zone = document.getElementById('gc-drop-zone');
+  zone.style.borderColor = 'rgba(26,109,255,0.35)';
+  zone.style.background  = 'rgba(26,109,255,0.03)';
+  handleGCFiles(e.dataTransfer.files);
+}
+
+function handleGCFiles(files) {
+  const errEl = document.getElementById('gc-error');
+  errEl.classList.remove('show');
+  Array.from(files).forEach(file => {
+    if (!file.type.startsWith('image/')) {
+      errEl.textContent = `"${file.name}" is not an image.`; errEl.classList.add('show'); return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      errEl.textContent = `"${file.name}" exceeds 5 MB.`; errEl.classList.add('show'); return;
+    }
+    if (gcImages.length >= 6) {
+      errEl.textContent = 'Maximum 6 images allowed.'; errEl.classList.add('show'); return;
+    }
+    const reader = new FileReader();
+    reader.onload = ev => {
+      gcImages.push({ name: file.name, dataURL: ev.target.result });
+      renderGCPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+  /* Reset input so same file can be re-added after removal */
+  document.getElementById('gc-img-input').value = '';
+}
+
+function removeGCImage(idx) {
+  gcImages.splice(idx, 1);
+  renderGCPreviews();
+}
+
+function renderGCPreviews() {
+  const container = document.getElementById('gc-img-previews');
+  const countEl   = document.getElementById('gc-img-count');
+  const zone      = document.getElementById('gc-drop-zone');
+
+  if (!gcImages.length) {
+    container.innerHTML = '';
+    countEl.textContent = '';
+    zone.style.borderColor = 'rgba(26,109,255,0.35)';
+    return;
+  }
+
+  zone.style.borderColor = 'var(--green)';
+  countEl.textContent = `${gcImages.length} image${gcImages.length > 1 ? 's' : ''} selected`;
+
+  container.innerHTML = gcImages.map((img, i) => `
+    <div style="position:relative;width:90px;height:90px;border-radius:8px;overflow:hidden;border:2px solid rgba(34,197,94,0.4);">
+      <img src="${img.dataURL}" alt="${img.name}" style="width:100%;height:100%;object-fit:cover;" />
+      <button onclick="removeGCImage(${i})" title="Remove"
+        style="position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(239,68,68,0.9);color:#fff;border:none;font-size:0.7rem;cursor:pointer;font-weight:800;line-height:1;">✕</button>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:2px 4px;background:rgba(0,0,0,0.6);font-size:0.6rem;color:#fff;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${img.name}</div>
+    </div>`).join('');
+}
+
+function submitGiftCard() {
+  const brand  = document.getElementById('gc-brand').value;
+  const amount = document.getElementById('gc-amount').value;
+  const code   = document.getElementById('gc-code').value.trim();
+  const errEl  = document.getElementById('gc-error');
+  const sucEl  = document.getElementById('gc-success');
+  errEl.classList.remove('show'); sucEl.classList.remove('show');
+  if (!brand || !amount || !code) { errEl.textContent='Please fill in the brand, amount and card code.'; errEl.classList.add('show'); return; }
+  if (!gcImages.length) { errEl.textContent='Please upload at least one image of your gift card.'; errEl.classList.add('show'); return; }
+
+  const user = getCurrentUser();
+  const txn  = addTransaction(user.id, 'Gift Card Sale', `${brand} $${amount}`, parseFloat(amount)*(GC_RATES[brand]||0.7));
+  /* Attach images to the transaction object in localStorage */
+  if (txn) {
+    const txns = getTransactions();
+    const t = txns.find(x => x.id === txn.id);
+    if (t) { t.images = gcImages.map(img => img.dataURL); saveTransactions(txns); }
+  }
+  /* Open chat for this transaction */
+  const chat = createChat(user.id, 'transaction', txn ? txn.id : null, {
+    id: txn ? txn.id : 'TXN?', type: 'Gift Card Sale',
+    details: `${brand} $${amount}`, amount: parseFloat(amount)*(GC_RATES[brand]||0.7),
+    brand, denomination: `$${amount}`, images: gcImages.length
+  });
+  /* Send image thumbnails as a chat message */
+  if (gcImages.length && chat) {
+    sendChatMessage(chat.id, user.id, user.name,
+      `🖼️ ${gcImages.length} card image${gcImages.length > 1 ? 's' : ''} uploaded with this submission.`);
+  }
+
+  sucEl.textContent = `✓ ${brand} gift card + ${gcImages.length} image(s) submitted! Chat opened — our team will respond shortly.`;
+  sucEl.classList.add('show');
+
+  /* Reset form */
+  document.getElementById('gc-brand').value  = '';
+  document.getElementById('gc-amount').value = '';
+  document.getElementById('gc-code').value   = '';
+  document.getElementById('gc-payout').textContent = '$0.00';
+  gcImages = [];
+  renderGCPreviews();
+  loadTransactions();
+  setTimeout(() => { switchTab('chat'); activeChatId = chat.id; loadChats(); }, 800);
+}
+
+function submitCrypto() {
+  const action  = document.getElementById('crypto-action').value;
+  const coin    = document.getElementById('crypto-coin').value;
+  const usd     = document.getElementById('crypto-usd').value;
+  const errEl   = document.getElementById('crypto-error');
+  const sucEl   = document.getElementById('crypto-success');
+  errEl.classList.remove('show'); sucEl.classList.remove('show');
+  if (!usd) { errEl.textContent='Please enter the USD amount.'; errEl.classList.add('show'); return; }
+  const user = getCurrentUser();
+  const txn  = addTransaction(user.id, `Crypto ${action}`, `${action} ${coin}`, parseFloat(usd));
+  /* Open chat for this crypto transaction */
+  const chat = createChat(user.id, 'transaction', txn ? txn.id : null, {
+    id: txn ? txn.id : 'TXN?', type:`Crypto ${action}`,
+    details:`${action} ${coin} — $${usd}`, amount: parseFloat(usd),
+    coin, action
+  });
+  sucEl.textContent = `✓ ${action} request for ${coin} submitted. Chat opened — our agent will contact you shortly.`;
+  sucEl.classList.add('show');
+  loadTransactions();
+  setTimeout(() => { switchTab('chat'); activeChatId = chat.id; loadChats(); }, 800);
+}
+
+/* ---- Live crypto prices ---- */
+const COIN_NAMES = { bitcoin:'BTC', ethereum:'ETH', solana:'SOL', tether:'USDT', binancecoin:'BNB', ripple:'XRP', dogecoin:'DOGE', cardano:'ADA' };
+const COIN_FULL  = { bitcoin:'Bitcoin', ethereum:'Ethereum', solana:'Solana', tether:'Tether', binancecoin:'BNB', ripple:'Ripple XRP', dogecoin:'Dogecoin', cardano:'Cardano' };
+
+async function loadCryptoPrices() {
+  try {
+    const ids = Object.keys(COIN_NAMES).join(',');
+    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
+    const data = await res.json();
+    renderCryptoGrids(data);
+  } catch(e) {
+    const fallback = {
+      bitcoin:{usd:65420,usd_24h_change:2.1},ethereum:{usd:3210,usd_24h_change:-1.3},
+      solana:{usd:148,usd_24h_change:4.2},tether:{usd:1.00,usd_24h_change:0.01},
+      binancecoin:{usd:580,usd_24h_change:1.5},ripple:{usd:0.58,usd_24h_change:-0.8},
+      dogecoin:{usd:0.12,usd_24h_change:3.1},cardano:{usd:0.44,usd_24h_change:-0.4}
+    };
+    renderCryptoGrids(fallback);
+  }
+}
+
+function renderCryptoGrids(data) {
+  const html = Object.entries(data).map(([id, info]) => {
+    const ch    = (info.usd_24h_change || 0).toFixed(2);
+    const cls   = info.usd_24h_change >= 0 ? 'up' : 'down';
+    const sign  = info.usd_24h_change >= 0 ? '+' : '';
+    const price = info.usd >= 1
+      ? info.usd.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})
+      : info.usd.toFixed(5);
+    return `<div class="crypto-mini">
+      <div class="cm-symbol">${COIN_FULL[id] || id}</div>
+      <div class="cm-price">$${price}</div>
+      <div class="cm-change ${cls}">${sign}${ch}%</div>
+    </div>`;
+  }).join('');
+  ['dash-crypto-grid','prices-grid'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  });
+}
+
+setInterval(loadCryptoPrices, 60000);
+
+/* ============================================================
+   NAIRA WALLET
+   ============================================================ */
+async function loadNairaWallet() {
+  const user = getCurrentUser(); if (!user) return;
+  let wallet;
+  try { wallet = await getUserWallet(user.id); } catch(e) { console.error('loadNairaWallet:', e); wallet = null; }
+  const naira = (wallet && wallet.naira) ? wallet.naira : { balance: 0, transactions: [] };
+  const balEl = document.getElementById('ngn-balance');
+  if (balEl) balEl.textContent = '\u20a6' + (naira.balance||0).toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
+  const tbody = document.getElementById('ngn-txn-body');
+  if (!tbody) return;
+  const txns = naira.transactions || [];
+  if (!txns.length) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:28px;color:var(--text-3);">No transactions yet.</td></tr>'; return; }
+  tbody.innerHTML = txns.map(t => `
+    <tr>
+      <td style="font-weight:600;color:var(--text-1);">${t.type||t.description||'-'}</td>
+      <td style="color:${(t.type||'').toLowerCase()==='withdrawal'||t.amount<0?'var(--red)':'var(--green)'};font-weight:700;">₦${Math.abs(Number(t.amount||0)).toLocaleString()}</td>
+      <td><span class="status-badge ${t.status||'pending'}">${t.status||'pending'}</span></td>
+      <td style="font-size:0.78rem;">${new Date(t.date||t.createdAt).toLocaleDateString()}</td>
+    </tr>`).join('');
+}
+
+function showNairaPanel(which) {
+  document.getElementById('naira-fund-panel').style.display     = which==='fund'     ? '' : 'none';
+  document.getElementById('naira-withdraw-panel').style.display = which==='withdraw' ? '' : 'none';
+}
+
+function submitNairaFund() {
+  const amount = document.getElementById('ngn-fund-amount').value;
+  const ref    = document.getElementById('ngn-fund-ref').value.trim();
+  const err    = document.getElementById('ngn-fund-err');
+  const suc    = document.getElementById('ngn-fund-suc');
+  err.classList.remove('show'); suc.classList.remove('show');
+  if (!amount || !ref) { err.textContent='Please fill all fields.'; err.classList.add('show'); return; }
+  if (parseFloat(amount) < 500) { err.textContent='Minimum fund amount is ₦500.'; err.classList.add('show'); return; }
+  const user = getCurrentUser();
+  requestNairaFunding(user.id, amount, ref);
+  suc.textContent = `✓ Fund request of ₦${Number(amount).toLocaleString()} submitted. We'll confirm within 30 minutes after verifying your transfer.`;
+  suc.classList.add('show');
+  document.getElementById('ngn-fund-amount').value = '';
+  document.getElementById('ngn-fund-ref').value = '';
+  loadNairaWallet();
+}
+
+function submitNairaWithdraw() {
+  const bank   = document.getElementById('wd-bank').value.trim();
+  const acct   = document.getElementById('wd-acct').value.trim();
+  const name   = document.getElementById('wd-name').value.trim();
+  const amount = document.getElementById('wd-amount').value;
+  const err    = document.getElementById('wd-err');
+  const suc    = document.getElementById('wd-suc');
+  err.classList.remove('show'); suc.classList.remove('show');
+  if (!bank || !acct || !name || !amount) { err.textContent='Please fill all fields.'; err.classList.add('show'); return; }
+  if (parseFloat(amount) < 1000) { err.textContent='Minimum withdrawal is ₦1,000.'; err.classList.add('show'); return; }
+  const user = getCurrentUser();
+  const result = requestNairaWithdrawal(user.id, amount, bank, acct, name);
+  if (!result.success) { err.textContent = result.message; err.classList.add('show'); return; }
+  suc.textContent = `✓ Withdrawal of ₦${Number(amount).toLocaleString()} to ${bank} requested. Payment within 1–24 hours.`;
+  suc.classList.add('show');
+  loadNairaWallet();
+}
+
+/* ============================================================
+   CRYPTO WALLET
+   ============================================================ */
+const COIN_ICONS = {
+  BTC:'₿', ETH:'Ξ', SOL:'◎', BNB:'⬡', USDT:'₮', XRP:'✕', DOGE:'Ð', ADA:'₳'
+};
+const COIN_COLORS = {
+  BTC:'#f7931a', ETH:'#627eea', SOL:'#9945ff', BNB:'#f3ba2f',
+  USDT:'#26a17b', XRP:'#00aae4', DOGE:'#c2a633', ADA:'#0033ad'
+};
+const DEFAULT_CRYPTO = {
+  BTC:  { balance:0, locked:0 },
+  ETH:  { balance:0, locked:0 },
+  USDT: { balance:0, locked:0 },
+  BNB:  { balance:0, locked:0 },
+  SOL:  { balance:0, locked:0 },
+  XRP:  { balance:0, locked:0 },
+  DOGE: { balance:0, locked:0 },
+  ADA:  { balance:0, locked:0 },
+};
+let activeSendCoin = 'BTC';
+let activeRecvCoin = 'BTC';
+
+async function loadCryptoWallet() {
+  const user = getCurrentUser(); if (!user) return;
+  try { checkMaturedStakes(user.id); } catch(e) { /* non-critical */ }
+  const grid = document.getElementById('cw-grid');
+  if (!grid) return;
+
+  grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--text-3);">
+    <div style="font-size:1.8rem;margin-bottom:10px;">&#8987;</div><div>Loading wallets…</div></div>`;
+
+  let storedCrypto = {};
+  try {
+    const wallet = await getUserWallet(user.id);
+    storedCrypto = (wallet && wallet.crypto) ? wallet.crypto : {};
+  } catch(e) {
+    console.warn('Wallet fetch failed, showing defaults:', e);
+  }
+
+  const crypto = {};
+  Object.keys(DEFAULT_CRYPTO).forEach(coin => {
+    crypto[coin] = { ...DEFAULT_CRYPTO[coin], ...(storedCrypto[coin] || {}) };
+  });
+  Object.keys(storedCrypto).forEach(coin => {
+    if (!crypto[coin]) crypto[coin] = storedCrypto[coin];
+  });
+
+  grid.innerHTML = Object.entries(crypto).map(([coin, data]) => {
+    const bal   = parseFloat(data.balance  || 0);
+    const lkd   = parseFloat(data.locked   || 0);
+    const avail = Math.max(0, bal - lkd).toFixed(8);
+    const col   = COIN_COLORS[coin] || '#1a6dff';
+    const icon  = COIN_ICONS[coin]  || coin[0];
+    const hasBalance = bal > 0;
+    return `
+    <div class="panel" style="border-top:3px solid ${col};">
+      <div class="panel-body">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <div style="width:46px;height:46px;border-radius:50%;background:${col}22;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:${col};flex-shrink:0;">${icon}</div>
+          <div style="flex:1;">
+            <div style="font-weight:800;font-size:1rem;color:var(--text-1);">${coin}</div>
+            <div style="font-size:0.72rem;color:var(--text-3);margin-top:1px;">Crypto Wallet</div>
+          </div>
+          ${hasBalance ? `<div style="font-size:0.7rem;font-weight:700;color:var(--green);background:rgba(34,197,94,0.1);padding:3px 8px;border-radius:20px;">Active</div>` : `<div style="font-size:0.7rem;color:var(--text-3);background:rgba(255,255,255,0.04);padding:3px 8px;border-radius:20px;border:1px solid var(--border);">Empty</div>`}
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;">
+          <div style="font-size:0.7rem;color:var(--text-3);margin-bottom:4px;letter-spacing:.06em;">TOTAL BALANCE</div>
+          <div style="font-size:1.25rem;font-weight:800;color:var(--text-1);">${bal.toFixed(8)} <span style="font-size:0.75rem;color:var(--text-2);font-weight:500;">${coin}</span></div>
+          <div style="font-size:0.78rem;color:var(--green);margin-top:4px;">${avail} ${coin} available</div>
+          ${lkd > 0 ? `<div style="font-size:0.72rem;color:var(--yellow);margin-top:3px;">&#128274; ${lkd.toFixed(8)} ${coin} staked</div>` : ''}
+        </div>
+        ${!hasBalance ? `<div style="font-size:0.78rem;color:var(--text-3);text-align:center;margin-bottom:12px;padding:8px;background:rgba(26,109,255,0.04);border-radius:8px;">
+          Tap <strong>Receive</strong> to get your deposit address
+        </div>` : ''}
+        <div style="display:flex;gap:8px;">
+          <button class="btn-sm primary" style="flex:1;" onclick="openReceive('${coin}')">&#8595; Receive</button>
+          <button class="btn-sm outline" style="flex:1;" onclick="openSend('${coin}','${avail}')">&#8593; Send</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+async function openReceive(coin) {
+  const user = getCurrentUser(); if (!user) return;
+  activeRecvCoin = coin;
+  document.getElementById('recv-title').textContent     = `Receive ${coin}`;
+  document.getElementById('recv-coin-warn').textContent = coin;
+  document.getElementById('recv-address').textContent   = 'Loading…';
+  document.getElementById('receive-modal').style.display = 'flex';
+  try {
+    const wallet = await getUserWallet(user.id);
+    const addr = wallet && wallet.crypto && wallet.crypto[coin] && wallet.crypto[coin].address
+      ? wallet.crypto[coin].address
+      : `Contact support to get your ${coin} deposit address.`;
+    document.getElementById('recv-address').textContent = addr;
+  } catch(e) {
+    document.getElementById('recv-address').textContent = 'Error loading address. Please try again.';
+  }
+}
+function copyAddress() {
+  const addr = document.getElementById('recv-address').textContent;
+  navigator.clipboard.writeText(addr).then(() => {
+    const btn = document.querySelector('#receive-modal .btn-auth');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy Address', 2000);
+  });
+}
+function openSend(coin, avail) {
+  activeSendCoin = coin;
+  document.getElementById('send-title').textContent    = `Send ${coin}`;
+  document.getElementById('send-coin-label').textContent = coin;
+  document.getElementById('send-avail').textContent     = avail;
+  document.getElementById('send-address').value = '';
+  document.getElementById('send-amount').value  = '';
+  document.getElementById('send-err').classList.remove('show');
+  document.getElementById('send-suc').classList.remove('show');
+  document.getElementById('send-modal').style.display = 'flex';
+}
+function confirmSend() {
+  const addr   = document.getElementById('send-address').value.trim();
+  const amount = document.getElementById('send-amount').value;
+  const err    = document.getElementById('send-err');
+  const suc    = document.getElementById('send-suc');
+  err.classList.remove('show'); suc.classList.remove('show');
+  if (!addr) { err.textContent='Enter recipient address.'; err.classList.add('show'); return; }
+  if (!amount || parseFloat(amount) <= 0) { err.textContent='Enter a valid amount.'; err.classList.add('show'); return; }
+  const user   = getCurrentUser();
+  const result = sendCryptoFromWallet(user.id, activeSendCoin, amount, addr);
+  if (!result.success) { err.textContent = result.message; err.classList.add('show'); return; }
+  suc.textContent = `✓ ${amount} ${activeSendCoin} sent successfully!`;
+  suc.classList.add('show');
+  setTimeout(() => { document.getElementById('send-modal').style.display='none'; loadCryptoWallet(); }, 2000);
+}
+
+/* ============================================================
+   STAKING
+   ============================================================ */
+const STAKING_RATES_UI = {
+  weekly:  { BTC:1.5, ETH:1.8, SOL:2.5, BNB:2.0, USDT:1.2, XRP:1.6, DOGE:3.0, ADA:2.2 },
+  monthly: { BTC:5.5, ETH:6.5, SOL:9.0, BNB:7.5, USDT:4.5, XRP:6.0, DOGE:11.0, ADA:8.5 },
+  yearly:  { BTC:22.0, ETH:26.0, SOL:32.0, BNB:28.0, USDT:16.0, XRP:21.0, DOGE:38.0, ADA:30.0 }
+};
+const PLAN_DAYS_UI = { weekly:7, monthly:30, yearly:365 };
+
+function updateStakePreview() {
+  const coin   = document.getElementById('stake-coin').value;
+  const plan   = document.getElementById('stake-plan').value;
+  const amount = parseFloat(document.getElementById('stake-amount').value) || 0;
+  const rate   = STAKING_RATES_UI[plan]?.[coin] || 0;
+  const days   = PLAN_DAYS_UI[plan] || 0;
+  const returns = amount * (rate / 100);
+  const total   = amount + returns;
+  const matures = new Date(Date.now() + days*24*60*60*1000).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  document.getElementById('prev-apy').textContent    = rate + '%';
+  document.getElementById('prev-days').textContent   = days + ' days';
+  document.getElementById('prev-return').textContent = amount > 0 ? returns.toFixed(8)+' '+coin : '—';
+  document.getElementById('prev-total').textContent  = amount > 0 ? total.toFixed(8)+' '+coin   : '—';
+  document.getElementById('prev-date').textContent   = amount > 0 ? matures : '—';
+}
+
+function loadStaking() {
+  const user = getCurrentUser(); if (!user) return;
+  checkMaturedStakes(user.id);
+  const stakes = getUserStakes(user.id);
+  document.getElementById('stake-badge').textContent = stakes.filter(s=>s.status==='active').length;
+  const tbody = document.getElementById('stakes-tbody');
+  if (!stakes.length) { tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--text-3);">No stakes yet. Start earning above!</td></tr>'; return; }
+  tbody.innerHTML = stakes.map(s => {
+    const now     = new Date();
+    const end     = new Date(s.endDate);
+    const start   = new Date(s.startDate);
+    const total   = end - start;
+    const elapsed = now - start;
+    const pct     = Math.min(100, (elapsed/total*100)).toFixed(0);
+    return `<tr>
+      <td style="font-weight:800;color:${COIN_COLORS[s.coin]||'var(--blue-b)'}">${s.coin}</td>
+      <td style="font-weight:700;">${s.amount.toFixed(8)}</td>
+      <td style="text-transform:capitalize;">${s.plan}</td>
+      <td style="color:var(--green);font-weight:700;">${s.apy}%</td>
+      <td style="color:var(--green);">+${s.returns.toFixed(8)}</td>
+      <td style="font-size:0.8rem;">${new Date(s.endDate).toLocaleDateString()}
+        ${s.status==='active'?`<div style="margin-top:4px;background:rgba(255,255,255,0.06);border-radius:50px;height:4px;"><div style="width:${pct}%;background:var(--green);height:4px;border-radius:50px;"></div></div>`:''}
+      </td>
+      <td><span class="status-badge ${s.status==='active'?'pending':s.status}">${s.status}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function submitStake() {
+  const coin   = document.getElementById('stake-coin').value;
+  const plan   = document.getElementById('stake-plan').value;
+  const amount = document.getElementById('stake-amount').value;
+  const err    = document.getElementById('stake-err');
+  const suc    = document.getElementById('stake-suc');
+  err.classList.remove('show'); suc.classList.remove('show');
+  if (!amount || parseFloat(amount) <= 0) { err.textContent='Enter a valid amount.'; err.classList.add('show'); return; }
+  const user   = getCurrentUser();
+  const result = createStake(user.id, coin, amount, plan);
+  if (!result.success) { err.textContent = result.message; err.classList.add('show'); return; }
+  const rate    = STAKING_RATES_UI[plan][coin];
+  suc.textContent = `✓ ${amount} ${coin} staked for ${plan} at ${rate}% return! Funds locked until maturity.`;
+  suc.classList.add('show');
+  document.getElementById('stake-amount').value = '';
+  updateStakePreview();
+  loadStaking();
+  loadCryptoWallet();
+}
+
+updateStakePreview();
+
+/* ============================================================
+   WALLET SUMMARY — Overview Cards
+   ============================================================ */
+function loadWalletSummary() {
+  const user = getCurrentUser(); if (!user) return;
+  checkMaturedStakes(user.id);
+  const wallet = getUserWallet(user.id);
+
+  /* ---- Naira Balance ---- */
+  const ngnEl = document.getElementById('ov-ngn-bal');
+  if (ngnEl) ngnEl.textContent = '₦' + wallet.naira.balance.toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+  /* ---- Crypto mini coin tags ---- */
+  const miniEl = document.getElementById('ov-crypto-mini');
+  const COIN_COL = { BTC:'#f7931a', ETH:'#627eea', SOL:'#9945ff', BNB:'#f3ba2f', USDT:'#26a17b', XRP:'#00aae4', DOGE:'#c2a633', ADA:'#0033ad' };
+  if (miniEl) {
+    const coinsWithBal = Object.entries(wallet.crypto).filter(([,d]) => d.balance > 0);
+    if (coinsWithBal.length) {
+      miniEl.innerHTML = coinsWithBal.map(([coin]) =>
+        `<span style="font-size:0.65rem;font-weight:800;padding:2px 7px;border-radius:50px;background:${COIN_COL[coin]}22;color:${COIN_COL[coin]};border:1px solid ${COIN_COL[coin]}44;">${coin}</span>`
+      ).join('');
+    } else {
+      miniEl.innerHTML = '<span style="font-size:0.72rem;color:var(--text-3);">No balance yet</span>';
+    }
+  }
+  const coinsEl = document.getElementById('ov-crypto-coins');
+  if (coinsEl) {
+    const total = Object.values(wallet.crypto).filter(d => d.balance > 0).length;
+    coinsEl.textContent = total ? total + ' Active' : '8 Coins';
+  }
+
+  /* ---- Staking ---- */
+  loadStakingBadge(user.id);
+}
+
+function loadStakingBadge(userId) {
+  const stakes  = getUserStakes(userId);
+  const active  = stakes.filter(s => s.status === 'active');
+  const returns = active.reduce((sum, s) => sum + s.returns, 0);
+
+  const badgeEl   = document.getElementById('stake-badge');
+  const countEl   = document.getElementById('ov-active-stakes');
+  const returnEl  = document.getElementById('ov-stake-return');
+
+  if (badgeEl)  badgeEl.textContent  = active.length;
+  if (countEl)  countEl.textContent  = active.length;
+  if (returnEl) {
+    const totalCoins = active.reduce((acc, s) => {
+      acc[s.coin] = (acc[s.coin] || 0) + s.returns;
+      return acc;
+    }, {});
+    const COIN_COL = { BTC:'#f7931a', ETH:'#627eea', SOL:'#9945ff', BNB:'#f3ba2f', USDT:'#26a17b', XRP:'#00aae4', DOGE:'#c2a633', ADA:'#0033ad' };
+    if (Object.keys(totalCoins).length) {
+      returnEl.innerHTML = Object.entries(totalCoins)
+        .map(([coin, ret]) => `<span style="color:${COIN_COL[coin]||'var(--yellow)'};">+${ret.toFixed(5)} ${coin}</span>`)
+        .join(' &nbsp;');
+    } else {
+      returnEl.textContent = 'No active stakes';
+      returnEl.style.color = 'var(--text-3)';
+    }
+  }
+}
+</script>
+<!-- SETTINGS JS injected below -->
+<script>
+/* ============================================================
+   SETTINGS
+   ============================================================ */
+let kycStream = null;
+let kycFaceData = null;
+let kycIdData   = null;
+
+function loadSettings() {
+  const user = getCurrentUser(); if (!user) return;
+
+  /* Current contact details */
+  const phoneEl = document.getElementById('s-cur-phone');
+  const emailEl = document.getElementById('s-cur-email');
+  const nameEl  = document.getElementById('s-bank-acctname');
+  const unameEl = document.getElementById('s-cur-username');
+  const uleftEl = document.getElementById('uname-left');
+  const ubadge  = document.getElementById('uname-changes-badge');
+  if (phoneEl) phoneEl.textContent = user.phone || 'Not set';
+  if (emailEl) emailEl.textContent = user.email || '';
+  if (nameEl)  nameEl.textContent  = user.name;
+  if (unameEl) unameEl.textContent = '@' + (user.username || 'not set');
+  const left = getUsernameChangesLeft(user.id);
+  if (uleftEl) uleftEl.textContent = left;
+  if (ubadge) {
+    ubadge.textContent = left + '/3 left';
+    ubadge.style.background = left > 0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)';
+    ubadge.style.color = left > 0 ? 'var(--green)' : 'var(--red)';
+  }
+
+  /* 2FA toggle state */
+  const twoFA = get2FAStatus(user.id);
+  const toggle = document.getElementById('twofa-toggle');
+  if (toggle) {
+    toggle.checked = twoFA.enabled;
+    updateToggleUI(twoFA.enabled);
+    if (twoFA.enabled && twoFA.secret) {
+      document.getElementById('twofa-secret-box').style.display = 'block';
+      document.getElementById('twofa-secret').textContent = twoFA.secret;
+    }
+  }
+
+  /* Bank account */
+  const bank = getBankAccount(user.id);
+  if (bank) {
+    document.getElementById('s-bank-name').value = bank.bankName;
+    document.getElementById('s-bank-num').value  = bank.accountNumber;
+    document.getElementById('bank-display-card').style.display = 'block';
+    document.getElementById('bank-saved-badge').style.display = 'inline-block';
+    document.getElementById('bd-bank').textContent = bank.bankName;
+    document.getElementById('bd-num').textContent  = bank.accountNumber;
+    document.getElementById('bd-name').textContent = bank.accountName;
+  }
+
+  /* KYC status */
+  const kyc = getKYCStatus(user.id);
+  const badge = document.getElementById('kyc-status-badge');
+  const banner = document.getElementById('kyc-verified-banner');
+  const formArea = document.getElementById('kyc-form-area');
+  const submitBtn = document.getElementById('kyc-submit-btn');
+  if (kyc) {
+    if (kyc.status === 'approved') {
+      badge.textContent = '✓ Verified'; badge.style.background = 'rgba(26,109,255,0.15)'; badge.style.color = '#1a6dff';
+      if (banner) { banner.style.display = 'flex'; }
+      if (formArea) formArea.style.display = 'none';
+    } else if (kyc.status === 'pending') {
+      badge.textContent = '⏳ Pending Review'; badge.style.background = 'rgba(245,158,11,0.15)'; badge.style.color = 'var(--yellow)';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitted — Pending Review'; }
+    } else if (kyc.status === 'rejected') {
+      badge.textContent = '✗ Rejected'; badge.style.background = 'rgba(239,68,68,0.15)'; badge.style.color = 'var(--red)';
+      const errEl = document.getElementById('kyc-err');
+      if (errEl) { errEl.textContent = 'Rejected: ' + (kyc.rejectedReason || 'Documents unclear. Please resubmit.'); errEl.classList.add('show'); }
+    }
+  }
+
+  /* Verified badge in sidebar */
+  renderVerifiedBadge(user);
+}
+
+function renderVerifiedBadge(user) {
+  const badge = document.getElementById('dash-verified-badge');
+  if (!badge) return;
+  if (user && user.verified) {
+    badge.style.display = 'inline';
+    badge.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="#1a6dff"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+/* ---- Change Username ---- */
+function doChangeUsername() {
+  const newU = document.getElementById('s-new-username').value.trim();
+  const err  = document.getElementById('uname-err');
+  const suc  = document.getElementById('uname-suc');
+  const btn  = document.getElementById('uname-save-btn');
+  err.classList.remove('show'); suc.classList.remove('show');
+  const user = getCurrentUser();
+  const res  = changeUsername(user.id, newU);
+  if (!res.success) { err.textContent = res.message; err.classList.add('show'); return; }
+  const left = getUsernameChangesLeft(user.id);
+  suc.textContent = `✓ Username changed to @${newU}. ${left} change(s) remaining this year.`;
+  suc.classList.add('show');
+  document.getElementById('s-cur-username').textContent = '@' + newU;
+  document.getElementById('uname-left').textContent = left;
+  const ubadge = document.getElementById('uname-changes-badge');
+  ubadge.textContent = left + '/3 left';
+  ubadge.style.background = left > 0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)';
+  ubadge.style.color = left > 0 ? 'var(--green)' : 'var(--red)';
+  if (left === 0) { btn.disabled = true; btn.textContent = 'No changes left this year'; }
+  document.getElementById('s-new-username').value = '';
+}
+
+/* ---- Change Password ---- */
+function doChangePassword() {
+  const old  = document.getElementById('s-old-pwd').value;
+  const nw   = document.getElementById('s-new-pwd').value;
+  const conf = document.getElementById('s-confirm-pwd').value;
+  const err  = document.getElementById('pwd-err');
+  const suc  = document.getElementById('pwd-suc');
+  err.classList.remove('show'); suc.classList.remove('show');
+  if (!old || !nw || !conf) { err.textContent='Fill all fields.'; err.classList.add('show'); return; }
+  if (nw !== conf) { err.textContent='Passwords do not match.'; err.classList.add('show'); return; }
+  const user = getCurrentUser();
+  const res  = changePassword(user.id, old, nw);
+  if (!res.success) { err.textContent = res.message; err.classList.add('show'); return; }
+  suc.textContent = '✓ Password updated successfully.'; suc.classList.add('show');
+  document.getElementById('s-old-pwd').value = '';
+  document.getElementById('s-new-pwd').value = '';
+  document.getElementById('s-confirm-pwd').value = '';
+}
+
+/* ---- Change Phone ---- */
+function doChangePhone() {
+  const phone = document.getElementById('s-new-phone').value.trim();
+  const err   = document.getElementById('phone-err');
+  const suc   = document.getElementById('phone-suc');
+  err.classList.remove('show'); suc.classList.remove('show');
+  const user  = getCurrentUser();
+  const res   = changePhone(user.id, phone);
+  if (!res.success) { err.textContent = res.message; err.classList.add('show'); return; }
+  suc.textContent = '✓ Phone updated to ' + phone;
+  suc.classList.add('show');
+  document.getElementById('s-cur-phone').textContent = phone;
+  document.getElementById('s-new-phone').value = '';
+}
+
+/* ---- Change Email ---- */
+function doChangeEmail() {
+  const email = document.getElementById('s-new-email').value.trim();
+  const err   = document.getElementById('email-err');
+  const suc   = document.getElementById('email-suc');
+  err.classList.remove('show'); suc.classList.remove('show');
+  const user  = getCurrentUser();
+  const res   = changeEmail(user.id, email);
+  if (!res.success) { err.textContent = res.message; err.classList.add('show'); return; }
+  suc.textContent = '✓ Email updated to ' + email;
+  suc.classList.add('show');
+  document.getElementById('s-cur-email').textContent = email;
+  document.getElementById('s-new-email').value = '';
+}
+
+/* ---- Bank Account ---- */
+function doSaveBank() {
+  const bName = document.getElementById('s-bank-name').value;
+  const bNum  = document.getElementById('s-bank-num').value;
+  const err   = document.getElementById('bank-err');
+  const suc   = document.getElementById('bank-suc');
+  err.classList.remove('show'); suc.classList.remove('show');
+  const user  = getCurrentUser();
+  const res   = saveBankAccount(user.id, bName, bNum);
+  if (!res.success) { err.textContent = res.message; err.classList.add('show'); return; }
+  suc.textContent = '✓ Bank account saved.';
+  suc.classList.add('show');
+  document.getElementById('bank-display-card').style.display = 'block';
+  document.getElementById('bank-saved-badge').style.display = 'inline-block';
+  document.getElementById('bd-bank').textContent = bName;
+  document.getElementById('bd-num').textContent  = bNum;
+  document.getElementById('bd-name').textContent = user.name;
+}
+
+/* ---- 2FA Toggle ---- */
+function updateToggleUI(enabled) {
+  const slider = document.getElementById('twofa-slider');
+  const knob   = document.getElementById('twofa-knob');
+  if (!slider) return;
+  slider.style.background = enabled ? '#1a6dff' : 'rgba(255,255,255,0.12)';
+  knob.style.left         = enabled ? '28px' : '4px';
+}
+function doToggle2FA() {
+  const user = getCurrentUser();
+  const res  = toggle2FA(user.id);
+  updateToggleUI(res.enabled);
+  const box = document.getElementById('twofa-secret-box');
+  const msg = document.getElementById('twofa-msg');
+  if (res.enabled) {
+    box.style.display = 'block';
+    document.getElementById('twofa-secret').textContent = res.secret;
+    msg.textContent = '✓ 2FA enabled. Save your backup code below.';
+    msg.classList.add('show');
+  } else {
+    box.style.display = 'none';
+    msg.textContent = 'ℹ 2FA has been disabled.';
+    msg.classList.add('show');
+  }
+}
+
+/* ---- KYC Webcam ---- */
+function previewKYCId(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    kycIdData = e.target.result;
+    document.getElementById('kyc-id-preview').src = kycIdData;
+    document.getElementById('kyc-id-preview-wrap').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function startKYCCamera() {
+  navigator.mediaDevices.getUserMedia({ video:{ facingMode:'user' }, audio:false })
+    .then(stream => {
+      kycStream = stream;
+      const video = document.getElementById('kyc-video');
+      video.srcObject = stream;
+      video.style.display = 'block';
+      document.getElementById('kyc-camera-placeholder').style.display = 'none';
+      document.getElementById('kyc-cam-btn').style.display = 'none';
+      document.getElementById('kyc-capture-btn').style.display = 'inline-block';
+    })
+    .catch(err => {
+      const e = document.getElementById('kyc-err');
+      e.textContent = 'Camera error: ' + err.message + '. Please allow camera access.';
+      e.classList.add('show');
+    });
+}
+
+function captureKYCFace() {
+  const video  = document.getElementById('kyc-video');
+  const canvas = document.getElementById('kyc-canvas');
+  canvas.width  = video.videoWidth  || 320;
+  canvas.height = video.videoHeight || 240;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  kycFaceData = canvas.toDataURL('image/jpeg', 0.8);
+  const preview = document.getElementById('kyc-face-preview');
+  preview.src = kycFaceData;
+  preview.style.display = 'block';
+  video.style.display = 'none';
+  if (kycStream) kycStream.getTracks().forEach(t => t.stop());
+  document.getElementById('kyc-capture-btn').style.display = 'none';
+  document.getElementById('kyc-retake-btn').style.display = 'inline-block';
+}
+
+function retakeKYCFace() {
+  kycFaceData = null;
+  document.getElementById('kyc-face-preview').style.display = 'none';
+  document.getElementById('kyc-retake-btn').style.display = 'none';
+  document.getElementById('kyc-cam-btn').style.display = 'inline-block';
+  document.getElementById('kyc-camera-placeholder').style.display = 'block';
+}
+
+function doSubmitKYC() {
+  const idType = document.getElementById('kyc-id-type').value;
+  const err    = document.getElementById('kyc-err');
+  const suc    = document.getElementById('kyc-suc');
+  err.classList.remove('show'); suc.classList.remove('show');
+  if (!kycIdData)   { err.textContent='Please upload your ID document.';    err.classList.add('show'); return; }
+  if (!kycFaceData) { err.textContent='Please capture your face photo.';    err.classList.add('show'); return; }
+  const user  = getCurrentUser();
+  const res   = submitKYC(user.id, idType, kycIdData, kycFaceData);
+  if (!res.success) { err.textContent = res.message; err.classList.add('show'); return; }
+  suc.textContent = '✓ KYC submitted! Our team will review within 24 hours. You will receive your verification badge upon approval.';
+  suc.classList.add('show');
+  const btn = document.getElementById('kyc-submit-btn');
+  btn.disabled = true; btn.textContent = 'Submitted — Pending Review';
+  const badge = document.getElementById('kyc-status-badge');
+  badge.textContent = '⏳ Pending Review';
+  badge.style.background = 'rgba(245,158,11,0.15)';
+  badge.style.color = 'var(--yellow)';
+}
+</script>
+<script>
+/* ============================================================
+   CHAT — USER SIDE
+   ============================================================ */
+let activeChatId = null;
+
+function loadChats() {
+  const user = getCurrentUser(); if (!user) return;
+  updateChatBadge(user.id);
+  const chats = getUserChats(user.id);
+  const listEl = document.getElementById('chat-list');
+  if (!listEl) return;
+
+  if (!chats.length) {
+    listEl.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-3);font-size:0.82rem;">No conversations yet.<br>Submit a transaction or start a support chat.</div>';
+  } else {
+    listEl.innerHTML = chats.map(c => {
+      const last = c.messages[c.messages.length - 1];
+      const lastText = last ? last.text.substring(0, 45) + (last.text.length > 45 ? '…' : '') : '';
+      const isActive = c.id === activeChatId;
+      const unread = c.unreadUser || 0;
+      const typeColor = c.type === 'transaction' ? '#1a6dff' : '#22c55e';
+      const typeLabel = c.type === 'transaction' ? '💳 Transaction' : '💬 Support';
+      const statusDot = c.status === 'closed' ? '🔒' : '🟢';
+      return `<div onclick="openChat('${c.id}')" style="padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;background:${isActive ? 'rgba(26,109,255,0.08)' : 'transparent'};border-left:3px solid ${isActive ? '#1a6dff' : 'transparent'};transition:all 0.2s;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+          <span style="font-size:0.72rem;font-weight:700;color:${typeColor};">${typeLabel}</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            ${unread ? `<span style="background:#ef4444;color:#fff;font-size:0.65rem;font-weight:800;padding:1px 7px;border-radius:50px;">${unread}</span>` : ''}
+            <span style="font-size:0.75rem;">${statusDot}</span>
+          </div>
+        </div>
+        <div style="font-size:0.82rem;color:var(--text-1);font-weight:600;margin-bottom:2px;">${c.transactionId || 'Support Enquiry'}</div>
+        <div style="font-size:0.75rem;color:var(--text-3);">${lastText}</div>
+        <div style="font-size:0.68rem;color:var(--text-3);margin-top:4px;">${new Date(c.updatedAt || c.createdAt).toLocaleString()}</div>
+      </div>`;
+    }).join('');
+  }
+
+  if (activeChatId) openChat(activeChatId);
+}
+
+function openChat(chatId) {
+  const user = getCurrentUser(); if (!user) return;
+  activeChatId = chatId;
+  markChatRead(chatId, 'user');
+  updateChatBadge(user.id);
+
+  const chat = getChatById(chatId);
+  if (!chat) return;
+
+  /* Header */
+  const headerEl = document.getElementById('chat-header');
+  const typeLabel = chat.type === 'transaction' ? '💳 Transaction Chat' : '💬 Support Chat';
+  const statusBg  = chat.status === 'closed' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)';
+  const statusCol = chat.status === 'closed' ? 'var(--green)' : 'var(--yellow)';
+  headerEl.innerHTML = `
+    <div style="flex:1;">
+      <div style="font-weight:800;font-size:0.95rem;">${typeLabel}</div>
+      <div style="font-size:0.75rem;color:var(--text-2);">${chat.transactionId || 'General Enquiry'}</div>
+    </div>
+    <span style="font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:50px;background:${statusBg};color:${statusCol};">${chat.status}</span>`;
+
+  /* Transaction tag */
+  const tagEl = document.getElementById('chat-txn-tag');
+  const tagMsg = chat.messages.find(m => m.msgType === 'txn_tag');
+  if (tagMsg && tagMsg.txnData) {
+    const td = tagMsg.txnData;
+    tagEl.style.display = 'block';
+    tagEl.innerHTML = `
+      <div style="font-size:0.7rem;font-weight:800;color:var(--blue-b);letter-spacing:0.1em;margin-bottom:8px;">📋 TRANSACTION DETAILS</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:0.8rem;">
+        <div><span style="color:var(--text-2);">ID</span><br><strong style="font-family:monospace;font-size:0.78rem;">${td.id}</strong></div>
+        <div><span style="color:var(--text-2);">Type</span><br><strong>${td.type}</strong></div>
+        <div><span style="color:var(--text-2);">Details</span><br><strong>${td.details}</strong></div>
+      </div>`;
+  } else {
+    tagEl.style.display = 'none';
+  }
+
+  /* Messages */
+  const msgsEl = document.getElementById('chat-messages');
+  const visibleMsgs = chat.messages.filter(m => m.msgType !== 'txn_tag');
+  msgsEl.innerHTML = visibleMsgs.map(m => renderMsgBubble(m, user.id)).join('');
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+
+  /* Input area */
+  const inputArea = document.getElementById('chat-input-area');
+  inputArea.style.display = chat.status === 'closed' ? 'none' : 'flex';
+
+  /* Refresh chat list to show active highlight */
+  const chats = getUserChats(user.id);
+  const listEl = document.getElementById('chat-list');
+  if (listEl && chats.length) {
+    listEl.querySelectorAll('div[onclick]').forEach(el => {
+      const cid = el.getAttribute('onclick').match(/'([^']+)'/)[1];
+      el.style.background = cid === chatId ? 'rgba(26,109,255,0.08)' : 'transparent';
+      el.style.borderLeft = cid === chatId ? '3px solid #1a6dff' : '3px solid transparent';
+    });
+  }
+}
+
+function renderMsgBubble(msg, userId) {
+  const isUser  = msg.senderId === userId;
+  const isSystem= msg.senderId === 'system';
+  const time    = new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+
+  if (isSystem) {
+    return `<div style="text-align:center;"><span style="font-size:0.75rem;color:var(--text-3);background:rgba(255,255,255,0.04);padding:4px 14px;border-radius:50px;">${msg.text}</span></div>`;
+  }
+
+  /* Image message */
+  if (msg.msgType === 'image' && msg.imageData) {
+    const align  = isUser ? 'flex-end' : 'flex-start';
+    const radius = isUser ? '12px 12px 4px 12px' : '12px 12px 12px 4px';
+    return `<div style="display:flex;flex-direction:column;align-items:${align};gap:3px;">
+      ${!isUser ? `<span style="font-size:0.7rem;color:var(--text-3);padding:0 4px;">${msg.senderName}</span>` : ''}
+      <a href="${msg.imageData}" target="_blank" style="display:block;">
+        <img src="${msg.imageData}" style="max-width:220px;max-height:180px;border-radius:${radius};object-fit:cover;cursor:pointer;border:2px solid rgba(255,255,255,0.08);" />
+      </a>
+      <span style="font-size:0.65rem;color:var(--text-3);">${time}</span>
+    </div>`;
+  }
+
+  const actionColors = { approve:'rgba(34,197,94,0.12)', reject:'rgba(239,68,68,0.12)', fail:'rgba(245,158,11,0.12)', decline:'rgba(239,68,68,0.12)' };
+  const bgColor = isUser
+    ? 'linear-gradient(135deg,var(--blue),var(--blue-b))'
+    : msg.msgType === 'action'
+      ? (actionColors[msg.action] || 'rgba(255,255,255,0.06)')
+      : 'rgba(255,255,255,0.06)';
+
+  const align  = isUser ? 'flex-end' : 'flex-start';
+  const radius = isUser ? '16px 16px 4px 16px' : '16px 16px 16px 4px';
+  const color  = isUser ? '#fff' : 'var(--text-1)';
+
+  return `<div style="display:flex;flex-direction:column;align-items:${align};gap:3px;">
+    ${!isUser ? `<span style="font-size:0.7rem;color:var(--text-3);padding:0 4px;">${msg.senderName}</span>` : ''}
+    <div style="max-width:75%;background:${bgColor};color:${color};padding:10px 14px;border-radius:${radius};font-size:0.87rem;line-height:1.5;">
+      ${msg.text}
+    </div>
+    <span style="font-size:0.65rem;color:var(--text-3);">${time}</span>
+  </div>`;
+}
+
+function sendUserMsg() {
+  const user = getCurrentUser(); if (!user || !activeChatId) return;
+  const input = document.getElementById('chat-msg-input');
+  const text  = input.value.trim();
+  let sent = false;
+  if (text) { sendChatMessage(activeChatId, user.id, user.name, text); input.value = ''; sent = true; }
+  chatImages.forEach(img => { sendChatImage(activeChatId, user.id, user.name, img.dataURL); sent = true; });
+  if (chatImages.length) { chatImages = []; renderChatImgPreviews(); }
+  if (sent) openChat(activeChatId);
+}
+
+function startSupportChat() {
+  const user = getCurrentUser(); if (!user) return;
+  const chat = createChat(user.id, 'support', null, null);
+  activeChatId = chat.id;
+  loadChats();
+}
+
+function updateChatBadge(userId) {
+  const total = getTotalUnreadChats(userId);
+  const badge = document.getElementById('chat-unread-badge');
+  if (badge) { badge.textContent = total; badge.style.display = total > 0 ? 'inline-block' : 'none'; }
+}
+
+/* ---- Chat image upload (user side) ---- */
+let chatImages = [];
+
+function chatAddImages(files) {
+  Array.from(files).forEach(file => {
+    if (!file.type.startsWith('image/')) return;
+    if (file.size > 5 * 1024 * 1024) return;
+    if (chatImages.length >= 5) return;
+    const reader = new FileReader();
+    reader.onload = ev => { chatImages.push({ name: file.name, dataURL: ev.target.result }); renderChatImgPreviews(); };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('chat-img-pick').value = '';
+}
+
+function removeChatImage(idx) { chatImages.splice(idx, 1); renderChatImgPreviews(); }
+
+function renderChatImgPreviews() {
+  const el = document.getElementById('chat-img-previews');
+  if (!el) return;
+  if (!chatImages.length) { el.style.display = 'none'; el.innerHTML = ''; return; }
+  el.style.display = 'flex';
+  el.innerHTML = chatImages.map((img, i) => `
+    <div style="position:relative;width:58px;height:58px;border-radius:6px;overflow:hidden;border:2px solid var(--blue-b);">
+      <img src="${img.dataURL}" style="width:100%;height:100%;object-fit:cover;" />
+      <button onclick="removeChatImage(${i})" style="position:absolute;top:1px;right:1px;width:16px;height:16px;border-radius:50%;background:rgba(239,68,68,0.9);color:#fff;border:none;font-size:0.6rem;cursor:pointer;font-weight:800;line-height:1;">\u2715</button>
+    </div>`).join('');
+}
+
+/* Auto-refresh active chat every 8s for new admin replies */
+setInterval(() => {
+  if (activeChatId && document.getElementById('tab-chat') && document.getElementById('tab-chat').style.display !== 'none') {
+    const user = getCurrentUser();
+    if (user) { updateChatBadge(user.id); openChat(activeChatId); }
+  }
+}, 8000);
+</script>
+
+<!-- Init Lucide icons after all scripts load -->
+<script>
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+  // Re-run after auth finishes loading dynamic content
+  setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 1500);
+</script>
+</body>
+</html>
